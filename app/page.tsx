@@ -1,277 +1,140 @@
-import { prisma } from "@/lib/prisma";
-import { ApiCard } from "@/components/marketplace/ApiCard";
-import { CategoryFilter } from "@/components/marketplace/CategoryFilter";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { extractIntent } from "@/lib/intent-map";
-import { sortApisByScore } from "@/lib/recommendation-score";
-import { SlidersHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, CheckCircle, Search, ShieldCheck, Zap } from "lucide-react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export const dynamic = 'force-dynamic';
-
-export default async function Home({ searchParams }: { searchParams: { page?: string, search?: string, category?: string, pricing?: string, sort?: string, stack?: string } }) {
-    const page = Number(searchParams.page) || 1;
-    const pageSize = 12;
-    const skip = (page - 1) * pageSize;
-    const search = searchParams.search || "";
-    const category = searchParams.category || "All";
-    const pricing = searchParams.pricing || "All";
-    const sort = searchParams.sort || "featured";
-    const stackPrompt = searchParams.stack || "";
-
-    // Build where clause
-    const where: any = {
-        status: "active", // Only show active APIs
-    };
-
-    let stackMessage = null;
-
-    if (stackPrompt) {
-        const intent = extractIntent(stackPrompt);
-
-        // Find candidates (broad match)
-        let candidateWhere: any = { status: "active" };
-        if (intent.categories.length > 0) {
-            candidateWhere.OR = [
-                { category: { in: intent.categories } },
-                ...intent.categories.map(cat => ({ tags: { contains: cat.toLowerCase() } }))
-            ];
-        } else {
-            // If no categories detected, maybe search simply by text?
-            // Or just don't limit candidates and rely on scoring?
-            // If prompt is "secure fast api", category detection might yield nothing if keywords don't match.
-            // Fallback: search name/desc if no category found?
-            if (stackPrompt.length > 3) {
-                candidateWhere.OR = [
-                    { name: { contains: stackPrompt } },
-                    { shortDescription: { contains: stackPrompt } }
-                ];
-            }
-        }
-
-        const candidateApis = await prisma.api.findMany({ where: candidateWhere });
-        const sorted = sortApisByScore(candidateApis, intent);
-
-        // Take top 20 relevant ones
-        const recommendations = sorted.slice(0, 20); // Keep reasonable limit
-
-        if (recommendations.length > 0) {
-            where.id = { in: recommendations.map(r => r.id) };
-            stackMessage = `Showing ${recommendations.length} APIs for your stack.`;
-        }
-    }
-
-    if (search) {
-        where.OR = [
-            { name: { contains: search } },
-            { shortDescription: { contains: search } },
-            { tags: { contains: search } },
-        ];
-    }
-
-    if (category !== "All") {
-        where.category = category;
-    }
-
-    if (pricing !== "All") {
-        where.pricingType = pricing;
-    }
-
-    // Build order by
-    let orderBy: any = { featured: 'desc' };
-    if (sort === "newest") {
-        orderBy = { createdAt: 'desc' };
-    } else if (sort === "rating") {
-        orderBy = { rating: 'desc' };
-    } else if (sort === "confidence") {
-        orderBy = { confidenceScore: 'desc' };
-    }
-
-    // Cache key based on all filters
-    // Note: unstable_cache is good for high-traffic public pages. 
-    // In valid production, we might use it. For now, since user wants "Add basic caching", 
-    // I will use `unstable_cache` from next/cache.
-
-    // However, unstable_cache requires a static import. 
-    // Let's import it first (I'll need to check imports).
-    // Actually, for simplicity and stability in this dev env, I might skip complex unstable_cache wrapping 
-    // if imports are tricky, but let's try standard React `cache` or just rely on Next.js Data Cache default behavior (deduping).
-    // But specific "Add basic caching" request implies doing something explicit.
-    // I'll use `unstable_cache`.
-
-    /* 
-       IMPROVEMENT: We can't easily stringify 'where' object for cache key due to complexity.
-       Instead, we create a specialized data fetching function.
-    */
-
-    // Fetch data directly for now, but optimize queries.
-    // To truly add caching properly in Next 14 app router, we usually move the DB call to a separate cached function.
-    // I will refactor this to use a helper if I edit standard page.
-
-    const [apis, totalApis] = await Promise.all([
-        prisma.api.findMany({
-            where,
-            orderBy,
-            take: pageSize,
-            skip: skip,
-        }),
-        prisma.api.count({ where }),
-    ]);
-
-    const totalPages = Math.ceil(totalApis / pageSize);
-
-    // For the purpose of "Basic Caching", Next.js automatically dedupes fetch requests. 
-    // Prisma requests are NOT automatically cached by Next.js component cache unless wrapped.
-    // I will leave this as is for now because keeping it dynamic 'force-dynamic' (line 12) was explicit before.
-    // To enable caching, I should remove 'force-dynamic' or use `unstable_cache`.
-    // The user requirement "Add basic caching" conflicts with "force-dynamic".
-    // I represents "Explore" which changes often.
-    // I will NOT force caching on the main search page as it breaks search interactivity often if not done carefully (stale search results).
-    // Instead I will implement caching on the **Categories** list which is static.
-
-    // ... code continues ... 
-
-    const categoriesGroup = await prisma.api.groupBy({
-        by: ['category'],
-        where: { status: "active" },
-    });
-
-    const categories = ["All", ...categoriesGroup.map(c => c.category).filter(Boolean)];
+export default async function LandingPage() {
+    // const session = await getServerSession(authOptions);
+    // if (session) {
+    //     redirect("/dashboard");
+    // }
 
     return (
-        <div className="space-y-8 pb-12">
-            <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-bold tracking-tight">Explore APIs</h1>
-                    <p className="text-muted-foreground max-w-lg">
-                        Discover {totalApis}+ APIs curated for developers.
-                        Filter by category, pricing, or confidence score.
+        <div className="flex flex-col min-h-screen">
+            {/* Hero Section */}
+            <section className="px-4 py-24 md:py-32 text-center space-y-8 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+                <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10 dark:bg-grid-slate-700/25" />
+                <div className="container max-w-5xl mx-auto space-y-6">
+                    <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary/10 text-primary hover:bg-primary/20">
+                        v2.0 Now Live
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight lg:text-7xl leading-tight">
+                        Your API command center <br className="hidden sm:inline" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
+                            in one dashboard
+                        </span>
+                    </h1>
+                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
+                        Discover, test, and manage 2000+ APIs. Handle internal keys, monitor usage, and streamline your developer workflow in one unified platform.
                     </p>
-                </div>
-                <div className="flex flex-col gap-6 w-full md:w-auto">
-
-                    <div className="flex flex-wrap items-center gap-2">
-                        <div className="flex items-center gap-2 mr-2 text-sm text-muted-foreground">
-                            <SlidersHorizontal className="h-4 w-4" />
-                            <span>Filters:</span>
-                        </div>
-
-                        {stackPrompt && (
-                            <Link
-                                href={`/?${new URLSearchParams({ ...searchParams, stack: "", page: "1" }).toString()}`}
-                            >
-                                <Badge variant="secondary" className="cursor-pointer hover:bg-destructive/10 hover:text-destructive transition-colors px-3 py-1 flex items-center gap-1">
-                                    Stack: {stackPrompt.length > 20 ? stackPrompt.substring(0, 20) + '...' : stackPrompt}
-                                    <span className="ml-1">×</span>
-                                </Badge>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8 w-full max-w-sm sm:max-w-none mx-auto">
+                        <Button size="lg" asChild className="w-full sm:w-auto text-lg px-8 h-12 shadow-lg shadow-primary/20">
+                            <Link href="/auth/signin">
+                                Start for free <ArrowRight className="ml-2 h-5 w-5" />
                             </Link>
-                        )}
-
-                        {["All", "Free", "Freemium", "Paid"].map((type) => (
-                            <Link
-                                key={type}
-                                href={`/?${new URLSearchParams({ ...searchParams, pricing: type === "All" ? "" : type, page: "1" }).toString()}`}
-                            >
-                                <Badge
-                                    variant={pricing === type || (pricing === "All" && type === "All") ? "default" : "outline"}
-                                    className="cursor-pointer hover:bg-primary/20 transition-colors px-3 py-1"
-                                >
-                                    {type}
-                                </Badge>
+                        </Button>
+                        <Button size="lg" variant="outline" asChild className="w-full sm:w-auto text-lg px-8 h-12 bg-background/50 hover:bg-muted">
+                            <Link href="/explore">
+                                Browse catalog
                             </Link>
-                        ))}
-                    </div>
-
-                    {/* Sorting Dropdown - Implementing as simple links or Select if client component? 
-                        Server component difficulty with Select onChange -> URL. 
-                        Let's use a simple distinct UI for Sort or keep it implicit.
-                        Actually, let's add a list of sort options below.
-                    */}
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                        <span>Sort by:</span>
-                        {[
-                            { label: "Featured", value: "featured" },
-                            { label: "High Confidence", value: "confidence" },
-                            { label: "Rating", value: "rating" },
-                            { label: "Newest", value: "newest" },
-                        ].map((opt) => (
-                            <Link
-                                key={opt.value}
-                                href={`/?${new URLSearchParams({ ...searchParams, sort: opt.value, page: "1" }).toString()}`}
-                                className={`hover:text-primary transition-colors ${sort === opt.value ? "font-bold text-primary underline" : ""}`}
-                            >
-                                {opt.label}
-                            </Link>
-                        ))}
+                        </Button>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div className="py-8">
-                <CategoryFilter categories={categories} />
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {apis.map((api) => (
-                    <ApiCard
-                        key={api.id}
-                        id={api.id}
-                        name={api.name}
-                        description={api.shortDescription}
-                        category={api.category}
-                        rating={api.rating}
-                        pricing={api.pricingType}
-                        confidenceScore={api.confidenceScore}
-                        logoUrl={api.logoUrl || undefined}
-                        logoSymbol={api.logoSymbol || undefined}
-                        affiliateUrl={api.affiliateUrl || undefined}
-                    />
-                ))}
-            </div>
-
-            {apis.length === 0 && (
-                <div className="text-center py-16 px-4">
-                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted mb-4">
-                        <SlidersHorizontal className="h-6 w-6 text-muted-foreground" />
+            {/* Features Section */}
+            <section className="py-24 bg-card/50 border-y">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-16 space-y-4">
+                        <h2 className="text-3xl font-bold tracking-tight">Everything you need to ship faster</h2>
+                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                            Stop wrestling with scattered documentation and keys. APIverse brings it all together.
+                        </p>
                     </div>
-                    <h3 className="text-lg font-semibold">No APIs found</h3>
-                    <p className="text-muted-foreground mt-2 max-w-xs mx-auto">
-                        Try adjusting your search terms or filters to find what you're looking for.
-                    </p>
-                    <Button asChild variant="link" className="mt-4">
-                        <Link href="/">Clear all filters</Link>
-                    </Button>
-                </div>
-            )}
 
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="flex justify-center gap-2 mt-12">
-                    <Button
-                        variant="outline"
-                        disabled={page <= 1}
-                        asChild
-                    >
-                        <Link href={`/?${new URLSearchParams({ ...searchParams, page: String(page - 1) }).toString()}`}>
-                            Previous
-                        </Link>
-                    </Button>
-                    <span className="flex items-center px-4 text-sm text-muted-foreground font-medium">
-                        Page {page} of {totalPages}
-                    </span>
-                    <Button
-                        variant="outline"
-                        disabled={page >= totalPages}
-                        asChild
-                    >
-                        <Link href={`/?${new URLSearchParams({ ...searchParams, page: String(page + 1) }).toString()}`}>
-                            Next
-                        </Link>
-                    </Button>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <FeatureCard
+                            icon={<Search className="h-10 w-10 text-blue-500" />}
+                            title="Unified Catalog"
+                            description="Access a massive directory of 1700+ curated APIs. Filter by category, pricing, and confidence score to find the best tools."
+                        />
+                        <FeatureCard
+                            icon={<Zap className="h-10 w-10 text-amber-500" />}
+                            title="Smart Insights"
+                            description="Get real-time health checks and latency stats. Our intelligent suggestions help you pick reliable APIs for your stack."
+                        />
+                        <FeatureCard
+                            icon={<ShieldCheck className="h-10 w-10 text-emerald-500" />}
+                            title="Internal Keys"
+                            description="Generate and manage secure proxy keys for your team. Revoke access instantly and track usage without code changes."
+                        />
+                    </div>
                 </div>
-            )}
+            </section>
+
+            {/* Pricing Preview */}
+            <section className="py-20">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center mb-12">Simple, transparent pricing</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+                        <PricingCard
+                            title="Free"
+                            price="₹0"
+                            features={["5 Saved APIs", "3 Personal Keys", "Standard Support"]}
+                        />
+                        <PricingCard
+                            title="Starter"
+                            price="₹299"
+                            features={["Unlimited Saved APIs", "20 Personal Keys", "Priority Support", "Analytics"]}
+                            highlight
+                        />
+                        <PricingCard
+                            title="Developer"
+                            price="₹899"
+                            features={["Unlimited Keys", "Team Access", "SLA Guarantee", "Advanced Metrics"]}
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer className="py-12 border-t text-center text-muted-foreground">
+                <div className="container mx-auto px-4">
+                    <p>&copy; 2025 APIverse. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
     );
 }
 
+function FeatureCard({ icon, title, description }: any) {
+    return (
+        <div className="p-6 rounded-2xl bg-card border shadow-sm hover:shadow-md transition-shadow">
+            <div className="mb-4">{icon}</div>
+            <h3 className="text-xl font-bold mb-2">{title}</h3>
+            <p className="text-muted-foreground">{description}</p>
+        </div>
+    );
+}
+
+function PricingCard({ title, price, features, highlight }: any) {
+    return (
+        <div className={`p-8 rounded-2xl border ${highlight ? 'border-primary bg-primary/5 shadow-lg relative' : 'bg-card shadow-sm'} flex flex-col`}>
+            {highlight && <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>}
+            <h3 className="text-2xl font-bold mb-2">{title}</h3>
+            <div className="text-4xl font-bold mb-6">{price}<span className="text-base font-normal text-muted-foreground">/mo</span></div>
+            <ul className="space-y-3 mb-8 flex-1">
+                {features.map((f: string) => (
+                    <li key={f} className="flex items-center gap-2 text-sm">
+                        <CheckCircle className="h-4 w-4 text-green-500" /> {f}
+                    </li>
+                ))}
+            </ul>
+            <Button variant={highlight ? "default" : "outline"} asChild>
+                <Link href="/plans">View Plans</Link>
+            </Button>
+        </div>
+    );
+}

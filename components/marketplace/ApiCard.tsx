@@ -35,9 +35,9 @@ export function ApiCard({
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             <div className="absolute -inset-px bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 rounded-xl blur-xl -z-10" />
 
-            <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2 relative z-10">
+            <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2 relative z-10 w-full">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary font-bold transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary font-bold transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20 overflow-hidden shrink-0">
                         {logoUrl ? (
                             <img src={logoUrl} alt={name} className="h-8 w-8 object-contain" />
                         ) : (
@@ -55,16 +55,15 @@ export function ApiCard({
                 </div>
                 <div className="flex gap-2">
                     {pricing === "Paid" && <Badge variant="default">{pricing}</Badge>}
-
                     {pricing === "Freemium" && <Badge variant="secondary">{pricing}</Badge>}
                     {pricing === "Free" && <Badge variant="success">{pricing}</Badge>}
                     {affiliateUrl && <Badge variant="outline" className="border-blue-500 text-blue-500">Partner</Badge>}
-                    <SaveApiButton apiId={id} />
+                    <SaveApiButton apiId={id} variant="icon" className="h-6 w-6" />
                 </div>
             </CardHeader>
 
             <CardContent className="pb-2 relative z-10">
-                <p className="line-clamp-2 text-sm text-muted-foreground leading-relaxed">
+                <p className="line-clamp-2 text-sm text-muted-foreground leading-relaxed h-[40px]">
                     {description}
                 </p>
                 <div className="mt-4 flex items-center gap-4 text-xs font-medium text-muted-foreground">
@@ -89,3 +88,4 @@ export function ApiCard({
         </Card>
     );
 }
+

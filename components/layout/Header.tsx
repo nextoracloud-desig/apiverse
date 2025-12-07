@@ -27,7 +27,7 @@ export function Header() {
         <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border/40 bg-background/60 backdrop-blur-xl px-4 md:px-6 transition-all duration-300">
             <Sheet>
                 <SheetTrigger asChild>
-                    <Button variant="outline" size="icon" className="md:hidden bg-background/50 backdrop-blur-sm border-border/50 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <Button variant="ghost" size="icon" className="md:hidden -ml-2 hover:bg-background/20">
                         <Menu className="h-5 w-5" />
                         <span className="sr-only">Toggle navigation</span>
                     </Button>
@@ -36,13 +36,13 @@ export function Header() {
                     <SidebarContent />
                 </SheetContent>
             </Sheet>
-            <div className="w-full flex-1">
-                <div className="relative group md:w-2/3 lg:w-1/3">
+            <div className="flex-1 w-full md:w-auto">
+                <div className="relative group w-full md:w-2/3 lg:w-1/3">
                     <SearchInput />
                 </div>
             </div>
 
-            <div className="flex items-center gap-3 md:gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
                 <Notifications />
 
                 <DropdownMenu>
@@ -56,7 +56,7 @@ export function Header() {
                             </Avatar>
                         </div>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuContent align="end" className="w-56" forceMount>
                         <DropdownMenuLabel>
                             <div className="flex flex-col space-y-1">
                                 <p className="text-sm font-medium leading-none">{user?.name || "User"}</p>
@@ -73,7 +73,7 @@ export function Header() {
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                            <Link href="/keys" className="cursor-pointer">
+                            <Link href="/dashboard/keys" className="cursor-pointer">
                                 <Key className="mr-2 h-4 w-4" />
                                 <span>My API Keys</span>
                             </Link>

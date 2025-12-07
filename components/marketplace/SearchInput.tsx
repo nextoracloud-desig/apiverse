@@ -14,19 +14,15 @@ export function SearchInput() {
 
     // Create a debounced search function
     useEffect(() => {
-        // If we are NOT on home page and value is empty, do nothing (don't redirect to home)
-        if (pathname !== "/" && !value) return;
-
-        // If we are on home page, or if we have a value to search:
         const timer = setTimeout(() => {
             // Only push if the query actually changed compared to current URL
             const currentSearch = searchParams.get("search") || "";
-            if (value === currentSearch && pathname === "/") return;
 
-            // If we are on another page and search is empty, don't redirect to home automatically
-            // unless the user explicitly cleared it? 
-            // Better rule: Only redirect if value is NOT empty, OR if we are already on home.
-            if (!value && pathname !== "/") return;
+            // If checking same value on explore page, skip
+            if (value === currentSearch && pathname === "/explore") return;
+
+            // If we are on another page and search is empty, don't redirect to explore automatically
+            if (!value && pathname !== "/explore") return;
 
             const params = new URLSearchParams(searchParams.toString());
             if (value) {
@@ -37,14 +33,14 @@ export function SearchInput() {
             params.set("page", "1");
 
             // Construct the target URL
-            const targetUrl = `/?${params.toString()}`;
+            const targetUrl = `/explore?${params.toString()}`;
 
             // Avoid pushing if we are already there
             router.push(targetUrl);
         }, 500);
 
         return () => clearTimeout(timer);
-    }, [value, router]);
+    }, [value, router, pathname, searchParams]);
     // Removed searchParams and pathname from dependency to avoid loop? 
     // No, we need them. But let's be careful.
 
@@ -55,7 +51,7 @@ export function SearchInput() {
     // Guard: TWO: if value matches existing param -> return.
 
     return (
-        <div className="relative w-full md:w-72">
+        <div className="relative w-full">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
                 type="search"

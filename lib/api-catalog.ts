@@ -1,6 +1,6 @@
 export type PricingType = "Free" | "Freemium" | "Paid" | "Trial";
 
-export interface ApiRecord {
+export interface ApiDefinition {
     id: string;
     slug: string;
     name: string;
@@ -11,27 +11,30 @@ export interface ApiRecord {
     regionSupport?: string[];
     dxScore?: number;
     popularityScore?: number;
-    logoSymbol: string;
-    logoUrl?: string;
+    logoInitials: string; // was logoSymbol
+    logoUrl?: string; // optional image in future
+    logoSymbol?: string; // keeping for backward compatibility if needed, mapped to logoInitials
     shortDescription: string;
     longDescription: string;
     docsUrl: string;
     providerUrl: string;
     providerName: string;
     confidenceScore: number;
-    rating: number;
+    rating: number; // 0-5
     reviewCount: number;
     uptimeSla: string;
     sampleEndpointUrl: string;
     playgroundExampleResponse: any;
     isFeatured?: boolean;
     isNew?: boolean;
-    planNote?: string;
+    planLabel?: string;
+    createdAt?: string;
+    updatedAt?: string;
     affiliateUrl?: string;
     referralNote?: string;
 }
 
-export const API_CATALOG: ApiRecord[] = [
+export const API_CATALOG: ApiDefinition[] = [
     // AI
     {
         id: "api_openai_gpt4",
@@ -44,7 +47,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 95,
         popularityScore: 99,
-        logoSymbol: "OA",
+        logoInitials: "OA",
         shortDescription: "Most advanced AI model for text generation and reasoning.",
         longDescription: "GPT-4 is a large multimodal model (accepting image and text inputs, emitting text outputs) that, while less capable than humans in many real-world scenarios, exhibits human-level performance on various professional and academic benchmarks.",
         docsUrl: "https://platform.openai.com/docs",
@@ -82,7 +85,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 92,
         popularityScore: 90,
-        logoSymbol: "AN",
+        logoInitials: "AN",
         shortDescription: "Next-generation AI assistant for tasks at any scale.",
         longDescription: "Claude 3 offers industry-leading performance, intelligence, speed, and cost-efficiency. It excels at complex reasoning, coding, and nuanced content creation.",
         docsUrl: "https://docs.anthropic.com",
@@ -112,7 +115,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 88,
         popularityScore: 85,
-        logoSymbol: "SA",
+        logoInitials: "SA",
         shortDescription: "Generate high-quality images with Stable Diffusion.",
         longDescription: "Generate, edit, and upscale images using the latest Stable Diffusion models. Perfect for creative applications and media generation.",
         docsUrl: "https://platform.stability.ai/docs/api-reference",
@@ -139,7 +142,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global", "us", "eu"],
         dxScore: 99,
         popularityScore: 99,
-        logoSymbol: "ST",
+        logoInitials: "ST",
         shortDescription: "Financial infrastructure platform for the internet.",
         longDescription: "Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management.",
         docsUrl: "https://stripe.com/docs/api",
@@ -171,7 +174,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["us", "eu", "canada"],
         dxScore: 94,
         popularityScore: 92,
-        logoSymbol: "PL",
+        logoInitials: "PL",
         shortDescription: "Connect with users' bank accounts.",
         longDescription: "Plaid enables applications to connect with users' bank accounts to access transaction history, verify identity, and initiate payments.",
         docsUrl: "https://plaid.com/docs",
@@ -200,7 +203,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 90,
         popularityScore: 85,
-        logoSymbol: "WA",
+        logoInitials: "WA",
         shortDescription: "Realtime, forecast, and historical weather data.",
         longDescription: "Access current weather, forecast, history, marine, and air quality data via JSON/XML API. Easy to use and reliable.",
         docsUrl: "https://www.weatherapi.com/docs",
@@ -227,7 +230,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 92,
         popularityScore: 95,
-        logoSymbol: "OW",
+        logoInitials: "OW",
         shortDescription: "Weather forecasts, nowcasts and history.",
         longDescription: "One of the most popular weather APIs, providing current weather data, forecasts, and historical data for any location on Earth.",
         docsUrl: "https://openweathermap.org/api",
@@ -255,7 +258,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 98,
         popularityScore: 98,
-        logoSymbol: "TW",
+        logoInitials: "TW",
         shortDescription: "Send and receive SMS messages globally.",
         longDescription: "Twilio's Programmable SMS API helps you add robust messaging capabilities to your applications, enabling you to send and receive SMS messages globally.",
         docsUrl: "https://www.twilio.com/docs/sms",
@@ -283,7 +286,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 95,
         popularityScore: 96,
-        logoSymbol: "SG",
+        logoInitials: "SG",
         shortDescription: "Cloud-based email delivery platform.",
         longDescription: "SendGrid provides a reliable platform for transactional and marketing email delivery, ensuring your emails reach the inbox.",
         docsUrl: "https://docs.sendgrid.com/api-reference",
@@ -311,7 +314,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 90,
         popularityScore: 92,
-        logoSymbol: "CG",
+        logoInitials: "CG",
         shortDescription: "Cryptocurrency data API.",
         longDescription: "Get data on cryptocurrencies, exchanges, derivatives, and decentralized finance (DeFi). Comprehensive and easy to use.",
         docsUrl: "https://www.coingecko.com/en/api/documentation",
@@ -337,7 +340,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 93,
         popularityScore: 95,
-        logoSymbol: "CB",
+        logoInitials: "CB",
         shortDescription: "Buy, sell, and manage cryptocurrency.",
         longDescription: "Integrate Bitcoin, Ethereum, and Litecoin payments into your application. Secure and compliant.",
         docsUrl: "https://docs.cloud.coinbase.com/",
@@ -364,7 +367,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 96,
         popularityScore: 99,
-        logoSymbol: "GM",
+        logoInitials: "GM",
         shortDescription: "Maps, routes, and places API.",
         longDescription: "The most comprehensive maps API. Embed maps, search for places, and calculate routes with real-time traffic.",
         docsUrl: "https://developers.google.com/maps/documentation",
@@ -391,7 +394,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 97,
         popularityScore: 94,
-        logoSymbol: "MB",
+        logoInitials: "MB",
         shortDescription: "Customizable maps and location services.",
         longDescription: "Build custom maps and navigation experiences. Known for its beautiful map styles and flexibility.",
         docsUrl: "https://docs.mapbox.com/api/",
@@ -417,7 +420,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 85,
         popularityScore: 98,
-        logoSymbol: "X",
+        logoInitials: "X",
         shortDescription: "Access X (Twitter) data and features.",
         longDescription: "Programmatically post tweets, read timelines, and access user data and analytics.",
         docsUrl: "https://developer.twitter.com/en/docs",
@@ -443,7 +446,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 96,
         popularityScore: 97,
-        logoSymbol: "DC",
+        logoInitials: "DC",
         shortDescription: "Create bots and integrate with Discord.",
         longDescription: "Build bots, manage servers, and integrate your application with Discord's chat and voice platform.",
         docsUrl: "https://discord.com/developers/docs/intro",
@@ -471,7 +474,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 98,
         popularityScore: 96,
-        logoSymbol: "VC",
+        logoInitials: "VC",
         shortDescription: "Manage Vercel deployments and projects.",
         longDescription: "The Vercel API allows you to manage your Vercel projects, deployments, and domains programmatically.",
         docsUrl: "https://vercel.com/docs/rest-api",
@@ -496,7 +499,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 97,
         popularityScore: 99,
-        logoSymbol: "GH",
+        logoInitials: "GH",
         shortDescription: "Interact with GitHub repositories and users.",
         longDescription: "The GitHub REST API allows you to create and manage repositories, branches, issues, pull requests, and more.",
         docsUrl: "https://docs.github.com/en/rest",
@@ -525,7 +528,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 95,
         popularityScore: 98,
-        logoSymbol: "SP",
+        logoInitials: "SP",
         shortDescription: "Access Spotify's catalog and user data.",
         longDescription: "Get metadata about artists, albums, and tracks, and manage user libraries and playlists.",
         docsUrl: "https://developer.spotify.com/documentation/web-api",
@@ -551,7 +554,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 92,
         popularityScore: 99,
-        logoSymbol: "YT",
+        logoInitials: "YT",
         shortDescription: "Access YouTube videos and channels.",
         longDescription: "Add YouTube functionality to your application, including searching for videos, retrieving channel info, and managing playlists.",
         docsUrl: "https://developers.google.com/youtube/v3",
@@ -577,7 +580,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 88,
         popularityScore: 90,
-        logoSymbol: "NA",
+        logoInitials: "NA",
         shortDescription: "Astronomy Picture of the Day.",
         longDescription: "One of the most popular websites at NASA is the Astronomy Picture of the Day. This endpoint structures the APOD imagery and associated metadata.",
         docsUrl: "https://api.nasa.gov",
@@ -604,7 +607,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 90,
         popularityScore: 92,
-        logoSymbol: "SS",
+        logoInitials: "SS",
         shortDescription: "Flight search and booking API.",
         longDescription: "Search for flights, hotels, and car rentals. Compare prices from thousands of providers.",
         docsUrl: "https://developers.skyscanner.net",
@@ -629,7 +632,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 75,
         popularityScore: 99,
-        logoSymbol: "AB",
+        logoInitials: "AB",
         shortDescription: "Access Airbnb listings and reviews.",
         longDescription: "Search for homes, experiences, and restaurants. Note: This is often accessed via third-party scrapers as the official API is closed.",
         docsUrl: "https://rapidapi.com/collection/airbnb",
@@ -643,7 +646,7 @@ export const API_CATALOG: ApiRecord[] = [
         playgroundExampleResponse: {
             "listings": [{ "name": "Cozy Cabin", "price": "$150" }]
         },
-        planNote: "Unofficial API, use with caution."
+        planLabel: "Unofficial API, use with caution."
     },
     // Productivity
     {
@@ -656,7 +659,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 94,
         popularityScore: 95,
-        logoSymbol: "NO",
+        logoInitials: "NO",
         shortDescription: "Connect Notion pages and databases.",
         longDescription: "The Notion API allows you to connect Notion pages and databases to the tools you use every day.",
         docsUrl: "https://developers.notion.com",
@@ -682,7 +685,7 @@ export const API_CATALOG: ApiRecord[] = [
         regionSupport: ["global"],
         dxScore: 96,
         popularityScore: 98,
-        logoSymbol: "SL",
+        logoInitials: "SL",
         shortDescription: "Build apps and bots for Slack.",
         longDescription: "The Slack Web API is an interface for querying information from and enacting change in a Slack workspace.",
         docsUrl: "https://api.slack.com/web",
@@ -700,3 +703,111 @@ export const API_CATALOG: ApiRecord[] = [
         }
     }
 ];
+
+// --- Helper Functions ---
+
+export function getAllApis(): ApiDefinition[] {
+    return API_CATALOG;
+}
+
+export function getApiById(id: string): ApiDefinition | undefined {
+    return API_CATALOG.find(api => api.id === id);
+}
+
+export function getApiBySlug(slug: string): ApiDefinition | undefined {
+    return API_CATALOG.find(api => api.slug === slug);
+}
+
+export interface SearchParams {
+    search?: string;
+    category?: string;
+    pricing?: string;
+    sort?: string;
+    page?: number;
+    pageSize?: number;
+}
+
+export function searchApis(params: SearchParams) {
+    const {
+        search = "",
+        category = "All",
+        pricing = "All",
+        sort = "featured",
+        page = 1,
+        pageSize = 12
+    } = params;
+
+    let results = [...API_CATALOG];
+
+    // Filter by search (name, description, tags)
+    if (search && search.trim() !== "") {
+        const q = search.toLowerCase().trim();
+
+        // Synonym Expansion
+        const SYNONYMS: Record<string, string[]> = {
+            "image": ["vision", "photo", "generation", "stability"],
+            "vision": ["image", "ocr", "recognition"],
+            "ocr": ["vision", "text-recognition"],
+            "billing": ["payments", "stripe", "finance", "invoice"],
+            "payments": ["billing", "transaction", "checkout"],
+        };
+
+        const terms = [q];
+        Object.keys(SYNONYMS).forEach(key => {
+            if (q.includes(key)) {
+                terms.push(...SYNONYMS[key]);
+            }
+        });
+
+        results = results.filter(api => {
+            const text = (api.name + " " + api.shortDescription + " " + api.tags.join(" ")).toLowerCase();
+            return terms.some(term => text.includes(term));
+        });
+    }
+
+    // Filter by category
+    if (category && category !== "All") {
+        results = results.filter(api => api.category === category);
+    }
+
+    // Filter by pricing
+    if (pricing && pricing !== "All") {
+        results = results.filter(api => api.pricingType === pricing);
+    }
+
+    // Sort
+    if (sort) {
+        results.sort((a, b) => {
+            if (sort === "newest") {
+                // Mock newest based on isNew flag or random for now as createdAt is optional string
+                if (a.isNew && !b.isNew) return -1;
+                if (!a.isNew && b.isNew) return 1;
+                return 0;
+            }
+            if (sort === "rating") {
+                return b.rating - a.rating;
+            }
+            if (sort === "confidence") {
+                return b.confidenceScore - a.confidenceScore;
+            }
+            // default 'featured'
+            if (a.isFeatured && !b.isFeatured) return -1;
+            if (!a.isFeatured && b.isFeatured) return 1;
+            return 0;
+        });
+    }
+
+    const total = results.length;
+    const totalPages = Math.ceil(total / pageSize);
+    const startIndex = (page - 1) * pageSize;
+    const data = results.slice(startIndex, startIndex + pageSize);
+
+    return {
+        data,
+        total,
+        page,
+        pageSize,
+        totalPages
+    };
+}
+

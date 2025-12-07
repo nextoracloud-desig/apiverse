@@ -21,11 +21,11 @@ export function CategoryFilter({ categories }: CategoryFilterProps) {
             params.set("category", category);
         }
         params.set("page", "1"); // Reset page on filter change
-        router.push(`/?${params.toString()}`);
+        router.push(`/explore?${params.toString()}`);
     };
 
     return (
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide">
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 md:pb-0">
             {categories.map((category) => (
                 <Button
                     key={category}

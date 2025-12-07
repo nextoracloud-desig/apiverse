@@ -21,9 +21,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const sidebarItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Explore APIs", href: "/", icon: Compass },
+    { name: "Explore APIs", href: "/explore", icon: Compass },
     { name: "Saved APIs", href: "/saved", icon: Bookmark },
-    { name: "My API Keys", href: "/keys", icon: Key },
+    { name: "My API Keys", href: "/dashboard/keys", icon: Key },
     { name: "Community", href: "/community", icon: Users },
     { name: "Plans", href: "/plans", icon: CreditCard },
     { name: "Documentation", href: "/docs", icon: FileText },

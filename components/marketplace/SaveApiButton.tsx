@@ -1,44 +1,49 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
-import { toggleSavedApi } from "@/actions/api-actions";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 
 interface SaveApiButtonProps {
     apiId: string;
-    initialIsSaved?: boolean;
+    initialSaved?: boolean;
     className?: string;
+    variant?: "default" | "outline" | "ghost" | "icon";
 }
 
-export function SaveApiButton({ apiId, initialIsSaved = false, className }: SaveApiButtonProps) {
-    const [isSaved, setIsSaved] = useState(initialIsSaved);
-    const [isLoading, setIsLoading] = useState(false);
+export function SaveApiButton({ apiId, initialSaved = false, className, variant = "outline" }: SaveApiButtonProps) {
     const router = useRouter();
     const { data: session } = useSession();
+    const [isSaved, setIsSaved] = useState(initialSaved);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleToggle = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
         if (!session) {
-            router.push("/api/auth/signin");
+            router.push(`/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`);
             return;
         }
 
         setIsLoading(true);
-        // Optimistic update
-        setIsSaved(!isSaved);
 
         try {
-            await toggleSavedApi(apiId);
-            router.refresh();
+            const res = await fetch("/api/saved", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ apiId }),
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setIsSaved(data.saved);
+                router.refresh(); // Refresh server components to reflect state
+            }
         } catch (error) {
-            // Revert on error
-            setIsSaved(isSaved);
             console.error("Failed to toggle save", error);
         } finally {
             setIsLoading(false);
@@ -47,19 +52,14 @@ export function SaveApiButton({ apiId, initialIsSaved = false, className }: Save
 
     return (
         <Button
-            variant="ghost"
-            size="icon"
-            className={cn("h-8 w-8 hover:bg-transparent", className)}
+            variant={variant === "icon" ? "ghost" : variant}
+            size={variant === "icon" ? "icon" : "default"}
+            className={cn("transition-colors", className, isSaved && "text-red-500 hover:text-red-600")}
             onClick={handleToggle}
             disabled={isLoading}
         >
-            <Heart
-                className={cn(
-                    "h-5 w-5 transition-all duration-300",
-                    isSaved ? "fill-red-500 text-red-500 scale-110" : "text-muted-foreground hover:text-red-500"
-                )}
-            />
-            <span className="sr-only">Save API</span>
+            <Heart className={cn("h-4 w-4", isSaved && "fill-current")} />
+            {variant !== "icon" && (isSaved ? "Saved" : "Save")}
         </Button>
     );
 }

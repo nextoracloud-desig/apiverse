@@ -1,5 +1,6 @@
 import { SmartAssistantCard } from "@/components/dashboard/SmartAssistantCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Activity, CreditCard, Key, Server, TrendingUp, Search, BarChart3 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { SimpleLineChart } from "@/components/ui/chart";
@@ -7,6 +8,8 @@ import { getDashboardStats } from "@/actions/api-actions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { OnboardingModal } from "@/components/OnboardingModal";
+
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
@@ -36,7 +39,13 @@ export default async function DashboardPage() {
         take: 3,
         orderBy: { popularityScore: 'desc' },
         where: { status: "active" },
-        select: { name: true, category: true }
+        select: { id: true, name: true, category: true }
+    });
+
+    // Fetch fresh user data to bypass stale JWT session
+    const user = await prisma.user.findUnique({
+        where: { id: (session.user as any).id },
+        select: { onboarded: true }
     });
 
     return (
@@ -45,7 +54,7 @@ export default async function DashboardPage() {
 
             <SmartAssistantCard />
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Total Requests</CardTitle>
@@ -88,27 +97,43 @@ export default async function DashboardPage() {
                 </Card>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            <OnboardingModal onboarded={user?.onboarded ?? false} />
+
+            {/* Smart Section: Recommended & Recent */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <Card className="col-span-4">
                     <CardHeader>
-                        <CardTitle>Usage Overview</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                            <TrendingUp className="h-5 w-5 text-primary" />
+                            Recommended for You
+                        </CardTitle>
                     </CardHeader>
-                    <CardContent className="pl-2">
-                        <div className="h-[200px] w-full pt-4">
-                            <SimpleLineChart
-                                data={[10, 25, 18, 30, 45, 35, 55, 48, 60, 75, 65, 80]}
-                                height={180}
-                                color="currentColor"
-                                className="text-primary"
-                            />
+                    <CardContent>
+                        <div className="space-y-4">
+                            {topRecommended.map((api: any) => (
+                                <div key={api.name} className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0">
+                                    <div className="space-y-1">
+                                        <p className="font-medium leading-none">{api.name}</p>
+                                        <p className="text-sm text-muted-foreground">{api.category}</p>
+                                    </div>
+                                    <Button variant="outline" size="sm" asChild>
+                                        <a href={`/api/${api.id}`}>View</a>
+                                    </Button>
+                                </div>
+                            ))}
                         </div>
                     </CardContent>
                 </Card>
+
                 <Card className="col-span-3">
                     <CardHeader>
-                        <CardTitle>Recent Activity</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                            <Search className="h-5 w-5 text-blue-500" />
+                            Recent Activity
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
+                        {/* Using mock for now as recent activity is dynamic */}
                         <div className="space-y-8">
                             <div className="flex items-center">
                                 <div className="ml-4 space-y-1">
@@ -131,6 +156,24 @@ export default async function DashboardPage() {
                                 </div>
                                 <div className="ml-auto font-medium text-xs text-muted-foreground">5h ago</div>
                             </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                <Card className="col-span-4">
+                    <CardHeader>
+                        <CardTitle>Usage Overview</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pl-2">
+                        <div className="h-[200px] w-full pt-4">
+                            <SimpleLineChart
+                                data={[10, 25, 18, 30, 45, 35, 55, 48, 60, 75, 65, 80]}
+                                height={180}
+                                color="currentColor"
+                                className="text-primary"
+                            />
                         </div>
                     </CardContent>
                 </Card>

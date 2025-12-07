@@ -40,20 +40,28 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
 
-                // bcrypt compare
-                const isPasswordValid = user.password === credentials.password;
+                // bcrypt compare or plain text fallback
+                let isPasswordValid = false;
+
+                if (user.password.startsWith("$2") || user.password.startsWith("$1")) {
+                    isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+                } else {
+                    isPasswordValid = user.password === credentials.password;
+                }
 
                 if (!isPasswordValid) {
                     return null;
                 }
 
-                // yahi se role bhi bhej
+                // yahi se role plan bhi bhej
                 return {
                     id: user.id,
                     email: user.email,
                     name: user.name,
                     image: user.image,
                     role: (user as any).role ?? "user",
+                    plan: (user as any).plan ?? "free",
+                    onboarded: (user as any).onboarded ?? false,
                 };
             },
         }),
@@ -64,6 +72,8 @@ export const authOptions: NextAuthOptions = {
             if (user) {
                 token.id = (user as any).id;
                 token.role = (user as any).role ?? "user";
+                token.plan = (user as any).plan ?? "free";
+                token.onboarded = (user as any).onboarded ?? false;
             }
             return token;
         },
@@ -72,8 +82,14 @@ export const authOptions: NextAuthOptions = {
             if (session.user) {
                 (session.user as any).id = token.id;
                 (session.user as any).role = token.role ?? "user";
+                (session.user as any).plan = token.plan ?? "free";
+                (session.user as any).onboarded = token.onboarded ?? false;
             }
             return session;
+        },
+        async redirect({ url, baseUrl }) {
+            // Always redirect to dashboard after login
+            return `${baseUrl}/dashboard`;
         },
     },
 };

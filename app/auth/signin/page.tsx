@@ -1,69 +1,61 @@
-"use client";
+import { Metadata } from "next";
+import Link from "next/link";
+import { AuthForm } from "@/components/auth/auth-form";
+import { RocketIcon } from "lucide-react";
 
-import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Zap } from "lucide-react";
+export const metadata: Metadata = {
+    title: "Authentication | APIverse",
+    description: "Login to your APIverse account",
+};
 
-export default function SignInPage() {
+export default function AuthenticationPage() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-background p-4">
-            <Card className="w-full max-w-md border-border/50 bg-card/50 backdrop-blur-xl">
-                <CardHeader className="text-center">
-                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                        <Zap className="h-6 w-6" />
+        <div className="container relative h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+            <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+                <div className="absolute inset-0 bg-zinc-900" />
+                <div className="relative z-20 flex items-center text-lg font-medium">
+                    <RocketIcon className="mr-2 h-6 w-6" />
+                    APIverse
+                </div>
+                <div className="relative z-20 mt-auto">
+                    <blockquote className="space-y-2">
+                        <p className="text-lg">
+                            &ldquo;The centralized API catalog has completely streamlined our integration process. It's like an App Store for developers.&rdquo;
+                        </p>
+                        <footer className="text-sm">Sofia Davis, CTO</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <div className="p-4 lg:p-8 h-full flex items-center justify-center">
+                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                    <div className="flex flex-col space-y-2 text-center">
+                        <h1 className="text-2xl font-semibold tracking-tight">
+                            Sign In to your account
+                        </h1>
+                        <p className="text-sm text-muted-foreground">
+                            Enter your email below to sign in or create a new account
+                        </p>
                     </div>
-                    <CardTitle className="text-2xl">Welcome to APIverse</CardTitle>
-                    <CardDescription>Sign in to manage your APIs and keys</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <Button
-                        className="w-full"
-                        variant="outline"
-                        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                    >
-                        Sign in with Google
-                    </Button>
-                    <div className="relative">
-                        <div className="absolute inset-0 flex items-center">
-                            <span className="w-full border-t" />
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-                        </div>
-                    </div>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            const formData = new FormData(e.currentTarget);
-                            signIn("credentials", {
-                                email: formData.get("email"),
-                                password: formData.get("password"),
-                                callbackUrl: "/dashboard",
-                            });
-                        }}
-                        className="space-y-4"
-                    >
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="Email (demo@example.com)"
-                            className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-                            required
-                        />
-                        <input
-                            name="password"
-                            type="password"
-                            placeholder="Password (demo123)"
-                            className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-                            required
-                        />
-                        <Button type="submit" className="w-full">
-                            Sign In with Credentials
-                        </Button>
-                    </form>
-                </CardContent>
-            </Card>
+                    <AuthForm />
+                    <p className="px-8 text-center text-sm text-muted-foreground">
+                        By clicking continue, you agree to our{" "}
+                        <Link
+                            href="/terms"
+                            className="underline underline-offset-4 hover:text-primary"
+                        >
+                            Terms of Service
+                        </Link>{" "}
+                        and{" "}
+                        <Link
+                            href="/privacy"
+                            className="underline underline-offset-4 hover:text-primary"
+                        >
+                            Privacy Policy
+                        </Link>
+                        .
+                    </p>
+                </div>
+            </div>
         </div>
     );
 }

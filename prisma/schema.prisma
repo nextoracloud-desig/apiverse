@@ -27,9 +27,19 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
+  // Stripe & Plan
+  stripeCustomerId       String?   @unique
+  stripeSubscriptionId   String?   @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+  plan                   String    @default("free") // "free", "starter", "developer", "enterprise"
+  onboarded              Boolean   @default(false)
+
+
   projects             Project[]
   portalKeys           PortalKey[]
   recommendationEvents RecommendationEvent[]
+  feedback             ApiFeedback[]
 }
 
 model Project {
@@ -206,18 +216,40 @@ model Api {
   affiliateUrl              String?
   referralNote              String?
   createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
+
 
   portalKeys           PortalKey[]
   savedBy              SavedApi[]
   alternatives         ApiAlt[]        @relation("MainApi")
   usedAsAlternativeFor ApiAlt[]        @relation("AltApi")
   lockInScore          ApiLockInScore?
+  feedback             ApiFeedback[]
+
+  // Phase 4 Metrics
+  lastChecked  DateTime?
+  latency      Int       @default(0) // ms
+  verified     Boolean   @default(false)
+  updatedAt    DateTime  @updatedAt
 
   @@index([category])
   @@index([pricingType])
   @@index([status])
   @@index([featured])
+}
+
+model ApiFeedback {
+  id        String   @id @default(cuid())
+  apiId     String
+  userId    String
+  rating    Int      @default(0) // 1-5
+  badge     String?  // "Working", "Broken", "Scam", "Recommended"
+  comment   String?
+  createdAt DateTime @default(now())
+
+  api  Api  @relation(fields: [apiId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, apiId])
 }
 
 model ApiImportJob {

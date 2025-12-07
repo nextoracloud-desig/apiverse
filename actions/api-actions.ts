@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { redirect } from "next/navigation";
 
 // Helper: Self-Healing mechanism to ensure API exists before linking
-async function ensureApiExists(apiId: string): Promise<boolean> {
+export async function ensureApiExists(apiId: string): Promise<boolean> {
     try {
         const apiExists = await prisma.api.findUnique({ where: { id: apiId } });
         if (apiExists) return true;
@@ -75,8 +75,8 @@ export async function generateApiKey(apiId: string) {
     }
 
     try {
-        // Check if key already exists (PortalKey)
-        const existingKey = await prisma.portalKey.findFirst({
+        // Check if key already exists (UserApiKey)
+        const existingKey = await prisma.userApiKey.findFirst({
             where: {
                 userId,
                 apiId,
@@ -97,17 +97,18 @@ export async function generateApiKey(apiId: string) {
         // Generate new key
         const newKey = `pk_live_${uuidv4().replace(/-/g, "")}`;
 
-        await prisma.portalKey.create({
+        await prisma.userApiKey.create({
             data: {
                 userId,
                 apiId,
                 key: newKey,
                 status: "active",
+                name: `Key for ${apiId}`,
             },
         });
 
         revalidatePath("/dashboard");
-        revalidatePath("/keys");
+        revalidatePath("/dashboard/keys");
         revalidatePath(`/api/${apiId}`);
 
         return { success: true, key: newKey };
@@ -136,7 +137,7 @@ export async function revokeApiKey(keyId: string) {
     });
 
     revalidatePath("/dashboard");
-    revalidatePath("/keys");
+    revalidatePath("/dashboard/keys");
 }
 
 export async function toggleSavedApi(apiId: string) {

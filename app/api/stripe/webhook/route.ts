@@ -40,7 +40,7 @@ export async function POST(req: Request) {
                 stripeSubscriptionId: session.subscription as string,
                 stripePriceId: subscription.items.data[0].price.id,
                 stripeCurrentPeriodEnd: new Date(
-                    subscription.current_period_end * 1000
+                    (subscription.current_period_end ?? subscription.current_period?.end ?? 0) * 1000
                 ),
                 plan: session.metadata.plan || "starter", // fallback
             },
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
                 where: { id: user.id },
                 data: {
                     stripeCurrentPeriodEnd: new Date(
-                        subscription.current_period_end * 1000
+                        (subscription.current_period_end ?? subscription.current_period?.end ?? 0) * 1000
                     ),
                     stripePriceId: subscription.items.data[0].price.id,
                 },

@@ -5,6 +5,9 @@ import { Activity, CreditCard, Key, Server, TrendingUp, Search, BarChart3 } from
 import { prisma } from "@/lib/prisma";
 import { SimpleLineChart } from "@/components/ui/chart";
 import { getDashboardStats } from "@/actions/api-actions";
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";

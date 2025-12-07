@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
@@ -5,6 +8,10 @@ import { prisma } from "@/lib/prisma";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {
+    if (!stripe) {
+        return new NextResponse("Stripe not configured", { status: 500 });
+    }
+
     const body = await req.text();
     const signature = headers().get("Stripe-Signature") as string;
 

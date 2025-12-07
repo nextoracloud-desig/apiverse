@@ -1,3 +1,7 @@
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -26,6 +30,10 @@ export async function POST(req: Request) {
 
         if (!user) {
             return new NextResponse("User not found", { status: 404 });
+        }
+
+        if (!stripe) {
+            return new NextResponse("Stripe not configured", { status: 500 });
         }
 
         // Mock Price ID selection. In real app, put these in env/consts mapping.

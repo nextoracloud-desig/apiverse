@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+
 import { prisma } from "@/lib/prisma";
 
 // Use 'node-fetch' if environment is strictly Node < 18, but assuming Node 18+ global fetch

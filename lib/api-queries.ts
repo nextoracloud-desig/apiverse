@@ -1,4 +1,8 @@
-import { ApiRecord, PricingType } from "./api-catalog";
+import { PricingType } from "./api-catalog";
+
+// Local fallback type; keep in sync with api-catalog if needed
+type ApiRecord = any;
+
 
 export interface FilterOptions {
     search?: string;

@@ -36,11 +36,9 @@ export async function POST(req: Request) {
                 id: session.metadata.userId,
             },
             data: {
-                stripeCustomerId: session.customer as string,
-                stripeSubscriptionId: session.subscription as string,
-                stripePriceId: subscription.items.data[0].price.id,
+                stripePriceId: (subscription as any).items.data[0]?.price?.id,
                 stripeCurrentPeriodEnd: new Date(
-                    (subscription.current_period_end ?? subscription.current_period?.end ?? 0) * 1000
+                    (((subscription as any).current_period_end ?? (subscription as any).current_period?.end ?? 0) as number) * 1000
                 ),
                 plan: session.metadata.plan || "starter", // fallback
             },
@@ -62,9 +60,9 @@ export async function POST(req: Request) {
                 where: { id: user.id },
                 data: {
                     stripeCurrentPeriodEnd: new Date(
-                        (subscription.current_period_end ?? subscription.current_period?.end ?? 0) * 1000
+                        (((subscription as any).current_period_end ?? (subscription as any).current_period?.end ?? 0) as number) * 1000
                     ),
-                    stripePriceId: subscription.items.data[0].price.id,
+                    stripePriceId: (subscription as any).items?.data?.[0]?.price?.id ?? null,
                 },
             });
         }

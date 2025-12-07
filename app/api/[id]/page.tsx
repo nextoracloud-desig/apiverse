@@ -112,8 +112,8 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
                         <div className="flex items-center gap-4 text-sm text-muted-foreground pt-2">
                             <div className="flex items-center gap-1">
                                 <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
-                                <span className="font-medium text-foreground">{Number(api.rating || 0).toFixed(1)}</span>
-                                <span>({api.reviewCount?.toLocaleString() || 0} reviews)</span>
+                                <span className="font-medium text-foreground">{(api.rating ?? 0).toFixed(1)}</span>
+                                <span>({(api.reviewCount ?? 0).toLocaleString()} reviews)</span>
                             </div>
                             <div className="flex items-center gap-1">
                                 <ShieldCheck className="h-4 w-4 text-emerald-500" />
@@ -123,10 +123,10 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
                                     {api.confidenceScore ?? 0}% Confidence
                                 </span>
                             </div>
-                            {api.latency && (api.latency as number) > 0 && (
+                            {(api.latency ?? 0) > 0 && (
                                 <div className="flex items-center gap-1">
                                     <Zap className="h-4 w-4 text-yellow-500" />
-                                    <span>{api.latency}ms</span>
+                                    <span>{api.latency ?? 0}ms</span>
                                 </div>
                             )}
                         </div>
@@ -293,8 +293,8 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
                                 <CardContent className="space-y-4">
                                     <div className="flex items-center justify-between">
                                         <span className="font-medium">Portability Score</span>
-                                        <Badge variant={api.confidenceScore > 70 ? "outline" : "destructive"}>
-                                            {api.confidenceScore}/100
+                                        <Badge variant={(api.confidenceScore ?? 0) > 70 ? "outline" : "destructive"}>
+                                            {api.confidenceScore ?? 0}/100
                                         </Badge>
                                     </div>
                                 </CardContent>

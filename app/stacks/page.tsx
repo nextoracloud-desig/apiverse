@@ -81,9 +81,9 @@ export default function StacksPage() {
                                     name={item.api.name}
                                     description={item.api.shortDescription}
                                     category={item.api.category}
-                                    rating={item.api.rating}
+                                    rating={item.api.rating ?? 0}
                                     pricing={item.api.pricingType}
-                                    confidenceScore={item.api.confidenceScore}
+                                    confidenceScore={item.api.confidenceScore ?? 0}
                                     logoUrl={item.api.logoUrl}
                                     logoSymbol={item.api.logoSymbol}
                                     affiliateUrl={item.api.affiliateUrl}

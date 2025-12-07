@@ -53,9 +53,9 @@ export default async function SavedApisPage() {
                             name={api.name}
                             description={api.shortDescription}
                             category={api.category}
-                            rating={api.rating}
+                            rating={api.rating ?? 0}
                             pricing={api.pricingType}
-                            confidenceScore={api.confidenceScore}
+                            confidenceScore={api.confidenceScore ?? 0}
                             logoUrl={api.logoUrl}
                             logoSymbol={api.logoInitials || api.logoSymbol}
                         />

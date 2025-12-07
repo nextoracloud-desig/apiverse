@@ -108,9 +108,9 @@ export default function ExplorePage({ searchParams }: { searchParams: { page?: s
                         name={api.name}
                         description={api.shortDescription}
                         category={api.category}
-                        rating={api.rating}
+                        rating={api.rating ?? 0}
                         pricing={api.pricingType}
-                        confidenceScore={api.confidenceScore}
+                        confidenceScore={api.confidenceScore ?? 0}
                         logoUrl={api.logoUrl || undefined}
                         logoSymbol={api.logoInitials || api.logoSymbol} // fallback
                         affiliateUrl={api.affiliateUrl || undefined}

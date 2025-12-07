@@ -23,9 +23,9 @@ export async function POST(req: Request) {
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (event.type === "checkout.session.completed") {
-        const subscription = await stripe.subscriptions.retrieve(
+        const subscription = (await stripe.subscriptions.retrieve(
             session.subscription as string
-        );
+        )) as Stripe.Subscription;
 
         if (!session?.metadata?.userId) {
             return new NextResponse("User ID is missing from metadata", { status: 400 });
@@ -48,9 +48,9 @@ export async function POST(req: Request) {
     }
 
     if (event.type === "invoice.payment_succeeded") {
-        const subscription = await stripe.subscriptions.retrieve(
+        const subscription = (await stripe.subscriptions.retrieve(
             session.subscription as string
-        );
+        )) as Stripe.Subscription;
 
         // Find user by subscription ID if metadata not present here
         const user = await prisma.user.findFirst({

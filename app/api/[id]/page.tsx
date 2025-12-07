@@ -117,8 +117,10 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
                             </div>
                             <div className="flex items-center gap-1">
                                 <ShieldCheck className="h-4 w-4 text-emerald-500" />
-                                <span className={(api.confidenceScore || 0) > 80 ? "text-emerald-600 font-medium" : ""}>
-                                    {api.confidenceScore || 0}% Confidence
+                                <span
+                                    className={(api.confidenceScore ?? 0) > 80 ? "text-emerald-500" : "text-muted-foreground"}
+                                >
+                                    {api.confidenceScore ?? 0}% Confidence
                                 </span>
                             </div>
                             {api.latency && (api.latency as number) > 0 && (

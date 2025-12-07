@@ -34,7 +34,7 @@ export function filterApis(catalog: ApiRecord[], options: FilterOptions): ApiRec
             api.name.toLowerCase().includes(searchLower) ||
             api.shortDescription.toLowerCase().includes(searchLower) ||
             api.longDescription.toLowerCase().includes(searchLower) ||
-            api.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
+            api.tags.some((tag: string) => tag.toLowerCase().includes(searchLower)) ||
             api.category.toLowerCase().includes(searchLower)
         );
     }

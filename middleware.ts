@@ -30,3 +30,5 @@ export const config = {
     // /explore and /api/[id] are NOT listed, so they remain public (handled by page code if needed)
     matcher: ["/dashboard/:path*", "/saved/:path*", "/keys/:path*", "/settings/:path*", "/profile/:path*"],
 };
+
+// temp fix to trigger deploy

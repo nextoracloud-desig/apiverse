@@ -100,7 +100,8 @@ export default async function DashboardPage() {
                 </Card>
             </div>
 
-            <OnboardingModal onboarded={user?.onboarded ?? false} />
+            {/* OnboardingModal removed per user request */}
+            {/* <OnboardingModal onboarded={user?.onboarded ?? false} /> */}
 
             {/* Smart Section: Recommended & Recent */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">

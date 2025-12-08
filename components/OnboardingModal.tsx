@@ -32,7 +32,7 @@ export function OnboardingModal({ onboarded }: { onboarded: boolean }) {
 
     return (
         <Dialog open={open} onOpenChange={(val) => !val && handleComplete()}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-background border shadow-lg z-50">
                 <DialogHeader>
                     <DialogTitle className="text-2xl text-center">Welcome to APIverse! 🚀</DialogTitle>
                     <DialogDescription className="text-center pt-2">
@@ -84,8 +84,13 @@ export function OnboardingModal({ onboarded }: { onboarded: boolean }) {
                     </div>
                 </div>
 
-                <DialogFooter className="sm:justify-center">
-                    <Button onClick={handleNext} className="w-full sm:w-auto min-w-[150px]">
+                <DialogFooter className="flex sm:justify-between w-full">
+                    {step < 3 && (
+                        <Button variant="ghost" onClick={handleComplete} className="mr-auto">
+                            Skip
+                        </Button>
+                    )}
+                    <Button onClick={handleNext} className="ml-auto sm:ml-0 w-full sm:w-auto min-w-[150px]">
                         {step === 3 ? "Let's Go!" : "Next"} <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                 </DialogFooter>

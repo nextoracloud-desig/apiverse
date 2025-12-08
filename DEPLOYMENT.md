@@ -1,37 +1,34 @@
-# APIverse Deployment Guide
+# Deployment Guide for Render.com
 
-## Environment Variables
-Ensure these are set in your deployment environment (Vercel, Railway, etc.):
+This project is configured for deployment on Render. A `render.yaml` file has been added to the root directory to automate the setup using Render Blueprints.
 
-```env
-# Database
-DATABASE_URL="file:./dev.db" # Or Postgres URL for production
+## 1. Connect to Render
+1. Go to your [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** and select **Blueprint**.
+3. Connect your GitHub repository.
+4. Render will detect the `render.yaml` file and propose a new Web Service called `apiverse`.
 
-# Authentication (NextAuth)
-NEXTAUTH_URL="https://your-domain.com"
-NEXTAUTH_SECRET="your-secret-key-min-32-chars"
-GOOGLE_CLIENT_ID="optional"
-GOOGLE_CLIENT_SECRET="optional"
+## 2. Environment Variables
+You MUST configure the following Environment Variables in the Render Dashboard (or during the Blueprint setup).
 
-# Stripe (Optional for testing, required for Payments)
-STRIPE_SECRET_KEY="sk_test_..."
-STRIPE_PUBLIC_KEY="pk_test_..."
-STRIPE_WEBHOOK_SECRET="whsec_..."
-```
+| Variable | Description | Example |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | Your Supabase connection string. Use port **5432** (Session mode) or **6543** (Transaction pooler) depending on your preference. | `postgres://user:pass@db.supabase.co:6543/postgres?pgbouncer=true` |
+| `NEXTAUTH_URL` | **CRITICAL**: The exact URL of your deployed app. | `https://apiverse.onrender.com` |
+| `NEXTAUTH_SECRET` | A long random string for encryption. | `openssl rand -base64 32` |
+| `NODE_VERSION` | Node.js version to use. | `20.11.0` |
+| `GOOGLE_CLIENT_ID` | (Optional) For Google Login. | `...` |
+| `GOOGLE_CLIENT_SECRET` | (Optional) For Google Login. | `...` |
+| `STRIPE_SECRET_KEY` | Stripe Backend Key. | `sk_test_...` |
+| `STRIPE_WEBHOOK_SECRET` | Stripe Webhook Secret (needs to be updated if endpoint changes). | `whsec_...` |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe Frontend Key. | `pk_test_...` |
 
-## Commands
-- **Install**: `npm install`
-- **Database Init**: `npx prisma migrate deploy`
-- **Build**: `npm run build`
-- **Start**: `npm start`
+## 3. Important Checks
+- **Build Command**: `npm install && npm run build` (Pre-configured in `render.yaml`)
+- **Start Command**: `npm start` (Pre-configured)
+- **Runtime**: Dynamic routes are set to `nodejs` runtime by default now to support Supabase/Prisma.
 
-## Production Notes
-1.  **Webhooks**: Configure Stripe Webhooks to point to `https://your-domain.com/api/stripe/webhook`.
-2.  **Health Checks**:
-    - Setup a cron job to run `npx ts-node scripts/verifyAPIs.ts` daily to keep API health metrics fresh.
-    - Or use a Vercel Cron function (requires refactoring script to API route).
-3.  **Database**:
-    - For production, switch `provider = "sqlite"` to `"postgresql"` in `prisma/schema.prisma` if high concurrency is expected.
-
-## Support
-For issues, check the `app/api/feedback` implementation or Next.js logs.
+## 4. Troubleshooting
+If the build fails on Render but passes locally:
+- Check if `DATABASE_URL` is accessible from Render (Supabase "Network Restrictions").
+- Ensure `NEXTAUTH_URL` matches the Render URL exactly (no trailing slash).

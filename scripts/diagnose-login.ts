@@ -1,6 +1,6 @@
 
 import { prisma } from "../lib/prisma";
-import bcrypt from "bcrypt";
+const bcrypt = require("bcrypt");
 
 async function main() {
     const email = "a@gmail.com";

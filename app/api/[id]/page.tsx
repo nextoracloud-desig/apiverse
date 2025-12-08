@@ -14,10 +14,16 @@ import { RatingWidget } from "@/components/RatingWidget";
 
 export default async function ApiDetailsPage({ params }: { params: { id: string } }) {
     const apiDefinition = getApiById(params.id);
-    const dbApi = await prisma.api.findUnique({
-        where: { id: params.id },
-        include: { feedback: { select: { id: true } } }
-    });
+    let dbApi = null;
+    try {
+        dbApi = await prisma.api.findUnique({
+            where: { id: params.id },
+            include: { feedback: { select: { id: true } } }
+        });
+    } catch (e) {
+        console.error("Failed to fetch API from DB:", e);
+        // Continue with static definition only
+    }
 
     if (!apiDefinition && !dbApi) {
         notFound();

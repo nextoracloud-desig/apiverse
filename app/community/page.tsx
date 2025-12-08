@@ -37,15 +37,21 @@ async function createPost(formData: FormData) {
 
 export default async function CommunityPage() {
     const session = await getServerSession(authOptions);
-    const posts = await prisma.post.findMany({
-        include: {
-            author: true,
-            _count: {
-                select: { comments: true, likes: true }
-            }
-        },
-        orderBy: { createdAt: "desc" }
-    });
+    let posts: any[] = [];
+    try {
+        posts = await prisma.post.findMany({
+            include: {
+                author: true,
+                _count: {
+                    select: { comments: true, likes: true }
+                }
+            },
+            orderBy: { createdAt: "desc" }
+        });
+    } catch (error) {
+        console.error("Failed to fetch posts:", error);
+        // posts remains []
+    }
 
     return (
         <div className="container py-8 max-w-4xl space-y-8">

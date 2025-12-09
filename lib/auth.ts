@@ -12,11 +12,8 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
-    debug: true, // FORCE DEBUG LOGS FOR RENDER
-    // Trust the host header on Render/Vercel (proxied)
-    // helper to prevent "redirect_uri_mismatch" or protocol confusion
-    // causing the red screen or error=Callback
-    useSecureCookies: process.env.NODE_ENV === 'production',
+    debug: true,
+    useSecureCookies: false, // User requested explicit false
     cookies: {
         sessionToken: {
             name: `next-auth.session-token`,
@@ -24,13 +21,13 @@ export const authOptions: NextAuthOptions = {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: process.env.NODE_ENV === 'production'
+                secure: false // Matching useSecureCookies: false
             }
         }
     },
     pages: {
         signIn: "/auth/signin",
-        verifyRequest: "/auth/verify-request", // Optional: Custom verify page
+        verifyRequest: "/auth/verify-request",
     },
     providers: [
         GoogleProvider({
@@ -38,22 +35,16 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
             allowDangerousEmailAccountLinking: true,
         }),
-        // OTP / Magic Link Provider
         EmailProvider({
             server: {
                 host: process.env.EMAIL_SERVER_HOST,
                 port: Number(process.env.EMAIL_SERVER_PORT),
                 auth: {
                     user: process.env.EMAIL_SERVER_USER,
-                    pass: process.env.EMAIL_SERVER_PASSWORD
+                    pass: process.env.EMAIL_SERVER_PASSWORD,
                 },
-                secure: false, // true for 465, false for other ports (587, 2525)
-                tls: {
-                    rejectUnauthorized: false // Helps with some sandbox SMTP providers
-                }
             },
-            from: process.env.EMAIL_FROM || "noreply@example.com",
-            maxAge: 24 * 60 * 60,
+            from: process.env.EMAIL_FROM,
         }),
         CredentialsProvider({
             name: "credentials",

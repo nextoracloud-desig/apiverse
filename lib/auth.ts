@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import EmailProvider from "next-auth/providers/email";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma) as any,
@@ -28,11 +29,26 @@ export const authOptions: NextAuthOptions = {
     },
     pages: {
         signIn: "/auth/signin",
+        verifyRequest: "/auth/verify-request", // Optional: Custom verify page
     },
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+            allowDangerousEmailAccountLinking: true,
+        }),
+        // OTP / Magic Link Provider
+        EmailProvider({
+            server: {
+                host: process.env.EMAIL_SERVER_HOST || "",
+                port: Number(process.env.EMAIL_SERVER_PORT) || 587,
+                auth: {
+                    user: process.env.EMAIL_SERVER_USER || "",
+                    pass: process.env.EMAIL_SERVER_PASSWORD || ""
+                }
+            },
+            from: process.env.EMAIL_FROM || "noreply@example.com",
+            maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
         }),
         CredentialsProvider({
             name: "credentials",
@@ -83,7 +99,7 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
             // login ke time user aayega, baad me sirf token चलेगा
             if (user) {
                 token.id = (user as any).id;
@@ -104,7 +120,9 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
         async redirect({ url, baseUrl }) {
-            // Always redirect to dashboard after login
+            // Ensure we always go to dashboard, handling relative URLs correctly
+            if (url.startsWith("/")) return `${baseUrl}${url}`;
+            else if (new URL(url).origin === baseUrl) return url;
             return `${baseUrl}/dashboard`;
         },
     },

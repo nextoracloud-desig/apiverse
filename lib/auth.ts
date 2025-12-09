@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
+    debug: true, // FORCE DEBUG LOGS FOR RENDER
     // Trust the host header on Render/Vercel (proxied)
     // helper to prevent "redirect_uri_mismatch" or protocol confusion
     // causing the red screen or error=Callback
@@ -40,15 +41,19 @@ export const authOptions: NextAuthOptions = {
         // OTP / Magic Link Provider
         EmailProvider({
             server: {
-                host: process.env.EMAIL_SERVER_HOST || "",
-                port: Number(process.env.EMAIL_SERVER_PORT) || 587,
+                host: process.env.EMAIL_SERVER_HOST,
+                port: Number(process.env.EMAIL_SERVER_PORT),
                 auth: {
-                    user: process.env.EMAIL_SERVER_USER || "",
-                    pass: process.env.EMAIL_SERVER_PASSWORD || ""
+                    user: process.env.EMAIL_SERVER_USER,
+                    pass: process.env.EMAIL_SERVER_PASSWORD
+                },
+                secure: false, // true for 465, false for other ports (587, 2525)
+                tls: {
+                    rejectUnauthorized: false // Helps with some sandbox SMTP providers
                 }
             },
             from: process.env.EMAIL_FROM || "noreply@example.com",
-            maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
+            maxAge: 24 * 60 * 60,
         }),
         CredentialsProvider({
             name: "credentials",

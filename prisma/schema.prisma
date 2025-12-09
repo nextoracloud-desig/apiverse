@@ -14,6 +14,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  passwordHash  String? // New field for credentials auth
   role          String         @default("user") // "user" | "admin"
   accounts      Account[]
   sessions      Session[]

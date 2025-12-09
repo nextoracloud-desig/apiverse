@@ -12,91 +12,83 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
-    debug: true,
-    useSecureCookies: false, // User requested explicit false
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: false // Matching useSecureCookies: false
-            }
-        }
-    },
-    pages: {
-        signIn: "/auth/signin",
-        verifyRequest: "/auth/verify-request",
-    },
+    // Remove debug/cookie hacks for simple auth
+    debug: process.env.NODE_ENV === 'development',
     providers: [
+        // User requested to remove/comment out EmailProvider and Google for now
+        /*
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
             allowDangerousEmailAccountLinking: true,
         }),
-        EmailProvider({
-            server: {
-                host: process.env.EMAIL_SERVER_HOST,
-                port: Number(process.env.EMAIL_SERVER_PORT),
-                auth: {
-                    user: process.env.EMAIL_SERVER_USER,
-                    pass: process.env.EMAIL_SERVER_PASSWORD,
-                },
-                // Explicitly set secure to false for STARTTLS on port 587
-                secure: false,
-                tls: {
-                    // Do not fail on invalid certs (common for sandboxes)
-                    rejectUnauthorized: false
-                }
-            },
-            from: process.env.EMAIL_FROM,
-        }),
+        */
         CredentialsProvider({
-            name: "credentials",
+            name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                // basic guard
                 if (!credentials?.email || !credentials.password) {
-                    return null;
+                    throw new Error("Email and password are required");
                 }
 
-                // user from DB
+                const email = credentials.email.toLowerCase();
+                const password = credentials.password;
+
+                // 2) Find user
                 const user = await prisma.user.findUnique({
-                    where: { email: credentials.email },
+                    where: { email },
                 });
 
-                // agar user ही नहीं या password column missing
-                if (!user?.password) {
-                    return null;
-                }
-
-                // bcrypt compare or plain text fallback
-                let isPasswordValid = false;
-
-                if (user.password.startsWith("$2") || user.password.startsWith("$1")) {
-                    isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+                if (!user) {
+                    // 3a) Auto-Signup: Create new user
+                    // console.log("Creating new user:", email);
+                    const hash = await bcrypt.hash(password, 10);
+                    const newUser = await prisma.user.create({
+                        data: {
+                            email,
+                            name: email.split("@")[0],
+                            passwordHash: hash,
+                            role: "user",
+                            plan: "free",
+                            onboarded: false,
+                        },
+                    });
+                    return {
+                        id: newUser.id,
+                        email: newUser.email,
+                        name: newUser.name,
+                        image: newUser.image,
+                        role: "user",
+                        plan: "free",
+                        onboarded: false
+                    };
                 } else {
-                    isPasswordValid = user.password === credentials.password;
-                }
+                    // 3b) Login existing user
+                    if (!user.passwordHash) {
+                        // User exists but has no password (maybe from Magic Link days)
+                        // Per instructions: Reject login.
+                        console.error("User has no password set.");
+                        return null;
+                    }
 
-                if (!isPasswordValid) {
-                    return null;
-                }
+                    const isValid = await bcrypt.compare(password, user.passwordHash);
+                    if (!isValid) {
+                        return null; // Invalid password
+                    }
 
-                // yahi se role plan bhi bhej
-                return {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name,
-                    image: user.image,
-                    role: (user as any).role ?? "user",
-                    plan: (user as any).plan ?? "free",
-                    onboarded: (user as any).onboarded ?? false,
-                };
+                    return {
+                        id: user.id,
+                        email: user.email,
+                        name: user.name,
+                        image: user.image,
+                        role: (user as any).role ?? "user",
+                        plan: (user as any).plan ?? "free",
+                        onboarded: (user as any).onboarded ?? false,
+                    };
+                }
             },
         }),
     ],

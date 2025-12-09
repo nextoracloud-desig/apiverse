@@ -7,8 +7,24 @@ import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma) as any,
+    secret: process.env.NEXTAUTH_SECRET, // Critical for production (Render)
     session: {
         strategy: "jwt",
+    },
+    // Trust the host header on Render/Vercel (proxied)
+    // helper to prevent "redirect_uri_mismatch" or protocol confusion
+    // causing the red screen or error=Callback
+    useSecureCookies: process.env.NODE_ENV === 'production',
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production'
+            }
+        }
     },
     pages: {
         signIn: "/auth/signin",

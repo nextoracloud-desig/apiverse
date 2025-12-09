@@ -11,7 +11,7 @@ import { CreateProjectButton } from "@/components/projects/CreateProjectButton";
 export default async function KeysPage() {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-        redirect("/api/auth/signin");
+        redirect("/auth/signin?callbackUrl=/keys");
     }
 
     const userId = (session.user as any).id;

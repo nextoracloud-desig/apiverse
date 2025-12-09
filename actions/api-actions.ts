@@ -62,7 +62,7 @@ export async function ensureApiExists(apiId: string): Promise<boolean> {
 export async function generateApiKey(apiId: string) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-        redirect("/api/auth/signin");
+        redirect("/auth/signin");
     }
 
     const userId = (session.user as any).id;
@@ -71,7 +71,7 @@ export async function generateApiKey(apiId: string) {
     const userFunc = await prisma.user.findUnique({ where: { id: userId } });
     if (!userFunc) {
         // Stale session -> Force re-login
-        redirect("/api/auth/signin");
+        redirect("/auth/signin");
     }
 
     try {
@@ -121,7 +121,7 @@ export async function generateApiKey(apiId: string) {
 export async function revokeApiKey(keyId: string) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-        redirect("/api/auth/signin");
+        redirect("/auth/signin");
     }
 
     const userId = (session.user as any).id;
@@ -143,7 +143,7 @@ export async function revokeApiKey(keyId: string) {
 export async function toggleSavedApi(apiId: string) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
-        redirect("/api/auth/signin");
+        redirect("/auth/signin");
     }
 
     const userId = (session.user as any).id;
@@ -151,7 +151,7 @@ export async function toggleSavedApi(apiId: string) {
     // Validation: Ensure User exists
     const userFunc = await prisma.user.findUnique({ where: { id: userId } });
     if (!userFunc) {
-        redirect("/api/auth/signin");
+        redirect("/auth/signin");
     }
 
     try {

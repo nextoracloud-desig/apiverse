@@ -73,13 +73,13 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
 
     async function handleGetKey() {
         "use server";
-        if (!userId) redirect("/api/auth/signin");
+        if (!userId) redirect(`/auth/signin?callbackUrl=/api/${api.id}`);
         await generateApiKey(api.id!);
     }
 
     async function handleSave() {
         "use server";
-        if (!userId) redirect("/api/auth/signin");
+        if (!userId) redirect(`/auth/signin?callbackUrl=/api/${api.id}`);
         await toggleSavedApi(api.id!);
     }
 

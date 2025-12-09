@@ -17,7 +17,7 @@ import { OnboardingModal } from "@/components/OnboardingModal";
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
     if (!session) {
-        redirect("/api/auth/signin");
+        redirect("/auth/signin?callbackUrl=/dashboard");
     }
 
     const stats = await getDashboardStats();

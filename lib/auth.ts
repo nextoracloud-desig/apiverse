@@ -14,6 +14,9 @@ export const authOptions: NextAuthOptions = {
     },
     // Remove debug/cookie hacks for simple auth
     debug: process.env.NODE_ENV === 'development',
+    pages: {
+        signIn: "/auth/signin",
+    },
     providers: [
         // User requested to remove/comment out EmailProvider and Google for now
         /*

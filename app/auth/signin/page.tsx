@@ -18,15 +18,30 @@ export default function AuthenticationPage() {
                 <div className="absolute inset-0 bg-zinc-900" />
                 <div className="relative z-20 flex items-center text-lg font-medium">
                     <RocketIcon className="mr-2 h-6 w-6" />
-                    APIverse
+                    APIverse <span className="ml-2 text-xs text-zinc-400">v2.0 now live</span>
                 </div>
                 <div className="relative z-20 mt-auto">
-                    <blockquote className="space-y-2">
-                        <p className="text-lg">
-                            &ldquo;The centralized API catalog has completely streamlined our integration process. It's like an App Store for developers.&rdquo;
+                    <div className="space-y-6">
+                        <h1 className="text-4xl font-bold tracking-tight">
+                            Your API command center <br />
+                            <span className="text-blue-400">in one dashboard</span>
+                        </h1>
+                        <p className="text-lg text-zinc-300">
+                            Discover, test, and manage all your API integrations in a single unified platform.
+                            Stop wrestling with scattered documentation and keys.
                         </p>
-                        <footer className="text-sm">Sofia Davis, CTO</footer>
-                    </blockquote>
+                        <ul className="space-y-2 text-sm text-zinc-400">
+                            <li className="flex items-center">
+                                <span className="mr-2 text-blue-500">✓</span> Instant access to premium APIs
+                            </li>
+                            <li className="flex items-center">
+                                <span className="mr-2 text-blue-500">✓</span> Unified billing and usage tracking
+                            </li>
+                            <li className="flex items-center">
+                                <span className="mr-2 text-blue-500">✓</span> Smart AI-powered recommendations
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div className="p-4 lg:p-8 h-full flex items-center justify-center">

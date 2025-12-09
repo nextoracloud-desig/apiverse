@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 export default async function AdminPage({ searchParams }: { searchParams: { page?: string, query?: string } }) {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user) redirect("/api/auth/signin");
+    if (!session?.user) redirect("/auth/signin?callbackUrl=/admin");
 
     const user = await prisma.user.findUnique({
         where: { email: session.user.email! }

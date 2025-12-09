@@ -5,14 +5,12 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
-
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma) as any,
-    secret: process.env.NEXTAUTH_SECRET, // Critical for production (Render)
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     },
-    // Remove debug/cookie hacks for simple auth
     debug: process.env.NODE_ENV === 'development',
     pages: {
         signIn: "/auth/signin",
@@ -23,75 +21,77 @@ export const authOptions: NextAuthOptions = {
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
+                name: { label: "Name", type: "text" }
             },
             async authorize(credentials) {
                 const email = credentials?.email?.trim().toLowerCase();
                 const password = credentials?.password;
+                const name = credentials?.name;
 
-                console.log("AUTH DEBUG: Starting authorize for:", email);
+                console.log("AUTH DEBUG: start", email);
 
-                if (!email || !password) {
-                    console.error("AUTH DEBUG: Missing credentials");
-                    throw new Error("Please enter email and password.");
-                }
+                try {
+                    if (!email || !password) {
+                        throw new Error("Email and password are required");
+                    }
 
-                // 1) Check if user already exists
-                const existing = await prisma.user.findUnique({
-                    where: { email },
-                });
-                console.log("AUTH DEBUG: User found in DB?", !!existing);
+                    // 1) Check if user exists
+                    const user = await prisma.user.findUnique({
+                        where: { email },
+                    });
 
-                // 2) If user does NOT exist -> create account (signup)
-                if (!existing) {
-                    console.log("AUTH DEBUG: Creating new user for:", email);
-                    try {
-                        const hash = await bcrypt.hash(password, 10);
-                        const user = await prisma.user.create({
+                    // 2) If NO user found → Create new user (Auto-Signup)
+                    if (!user) {
+                        console.log("AUTH DEBUG: Creating new user", email);
+                        const hashedPassword = await bcrypt.hash(password, 10);
+
+                        const newUser = await prisma.user.create({
                             data: {
                                 email,
-                                passwordHash: hash,
+                                name: name || null, // Capture name if provided
+                                passwordHash: hashedPassword,
                                 role: "user",
                                 plan: "free",
                                 onboarded: false,
                             },
                         });
-                        console.log("AUTH DEBUG: New user created:", user.id);
-                        return {
-                            id: user.id,
-                            email: user.email,
-                            role: user.role,
-                            plan: user.plan,
-                        };
-                    } catch (err) {
-                        console.error("AUTH DEBUG: User creation failed:", err);
-                        throw new Error("Failed to create new user.");
+
+                        console.log("AUTH DEBUG: New user created", newUser.id);
+                        return newUser;
                     }
+
+                    // 3) Existing User: Check Magic Link status
+                    if (!user.passwordHash) {
+                        console.log("AUTH DEBUG: Magic link user", email);
+                        throw new Error("This account was created with magic link. Please reset your password.");
+                    }
+
+                    // 4) Verify password
+                    const isValid = await bcrypt.compare(password, user.passwordHash);
+                    console.log("AUTH DEBUG: password match?", email, isValid);
+
+                    if (!isValid) {
+                        throw new Error("Invalid email or password");
+                    }
+
+                    console.log("AUTH DEBUG: login success", email);
+                    return user;
+                } catch (error: any) {
+                    console.error("AUTH DEBUG", error); // Log full error as requested
+
+                    if (error.message === "Invalid email or password") {
+                        throw error;
+                    }
+                    if (error.message.includes("magic link")) {
+                        throw error;
+                    }
+                    if (error.message === "Email and password are required") {
+                        throw error;
+                    }
+
+                    // For unexpected errors
+                    throw new Error("Unexpected auth error, check server logs");
                 }
-
-                // 3) If user exists but no passwordHash (old magic-link account)
-                if (!existing.passwordHash) {
-                    console.warn("AUTH DEBUG: User exists but no passwordHash (Magic Link user)");
-                    // For now, reject login with clear message
-                    throw new Error(
-                        "This account was created with magic-link. Please contact support or reset your password."
-                    );
-                }
-
-                // 4) Normal login: compare password
-                const valid = await bcrypt.compare(password, existing.passwordHash);
-                console.log("AUTH DEBUG: Password match?", valid);
-
-                if (!valid) {
-                    throw new Error("Invalid email or password.");
-                }
-
-                // 5) Return user object for JWT
-                return {
-                    id: existing.id,
-                    email: existing.email,
-                    role: existing.role,
-                    plan: existing.plan,
-                };
             },
         })
     ],

@@ -34,67 +34,36 @@ export function AuthForm({ className }: AuthFormProps) {
 
         const email = target.email.value;
         const password = target.password.value;
+        let name: string | undefined;
 
-        try {
-            if (isLogin) {
-                // SIGN IN FLOW
-                const result = await signIn("credentials", {
-                    email,
-                    password,
-                    redirect: false,
-                    callbackUrl,
-                });
-
-                if (result?.error) {
-                    console.error("Sign-in error:", result.error);
-                    setError(result.error);
-                } else {
-                    router.push(callbackUrl);
-                    router.refresh();
-                }
-            } else {
-                // REGISTER FLOW
-                const name = target.name?.value;
-                const confirmPassword = target.confirmPassword?.value;
-
-                if (password !== confirmPassword) {
-                    setError("Passwords do not match");
-                    setIsLoading(false);
-                    return;
-                }
-
-                // 1. Create Account
-                const res = await fetch("/api/auth/register", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password, name }),
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(data.error || "Registration failed");
-                }
-
-                // 2. Auto Login on Success
-                const loginResult = await signIn("credentials", {
-                    email,
-                    password,
-                    redirect: false,
-                    callbackUrl,
-                });
-
-                if (loginResult?.error) {
-                    setError(loginResult.error);
-                } else {
-                    router.push(callbackUrl);
-                    router.refresh();
-                }
+        if (!isLogin) {
+            const confirmPassword = target.confirmPassword?.value;
+            if (password !== confirmPassword) {
+                setError("Passwords do not match");
+                setIsLoading(false);
+                return;
             }
-        } catch (err: any) {
-            setError(err.message || "Something went wrong");
-        } finally {
-            setIsLoading(false);
+            name = target.name?.value;
+        }
+
+        // UNIFIED FLOW: Calls signIn for both Login and Register
+        // The backend `authorize` function handles creating the user if they don't exist.
+        const result = await signIn("credentials", {
+            email,
+            password,
+            name, // Pass name (ignored by backend if user exists, used if creating new)
+            redirect: false,
+            callbackUrl,
+        });
+
+        setIsLoading(false);
+
+        if (result?.error) {
+            console.error("Auth error:", result.error);
+            setError(result.error);
+        } else {
+            router.push(callbackUrl);
+            router.refresh();
         }
     }
 

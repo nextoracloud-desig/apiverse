@@ -83,6 +83,9 @@ export function AuthForm({ className }: AuthFormProps) {
                     </Button>
                 </div>
             </form>
+            <div className="mt-4 text-center text-sm text-muted-foreground">
+                New here? Enter a new email + password and we’ll create your account automatically.
+            </div>
         </div>
     );
 }

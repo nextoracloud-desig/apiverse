@@ -38,7 +38,8 @@ export function AuthForm({ className }: AuthFormProps) {
         setIsLoading(false);
 
         if (result?.error) {
-            setError("Failed to send login email. Please try again.");
+            console.error("Sign-in error:", result.error);
+            setError("Failed to send login email. Please try again or check logs.");
         } else {
             setIsEmailSent(true);
         }

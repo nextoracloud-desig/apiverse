@@ -43,6 +43,12 @@ export const authOptions: NextAuthOptions = {
                     user: process.env.EMAIL_SERVER_USER,
                     pass: process.env.EMAIL_SERVER_PASSWORD,
                 },
+                // Explicitly set secure to false for STARTTLS on port 587
+                secure: false,
+                tls: {
+                    // Do not fail on invalid certs (common for sandboxes)
+                    rejectUnauthorized: false
+                }
             },
             from: process.env.EMAIL_FROM,
         }),

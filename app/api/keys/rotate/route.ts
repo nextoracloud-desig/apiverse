@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { revokeApiKey } from "@/lib/key-service"
+import { rotateApiKey } from "@/lib/key-service"
 import { prisma as db } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
@@ -27,11 +27,11 @@ export async function POST(req: Request) {
             return new NextResponse("Unauthorized", { status: 403 })
         }
 
-        const apiKey = await revokeApiKey(keyId)
+        const { rawKey, apiKey } = await rotateApiKey(keyId)
 
-        return NextResponse.json({ apiKey })
+        return NextResponse.json({ rawKey, apiKey })
     } catch (error) {
-        console.error("Revoke Key Error:", error)
+        console.error("Rotate Key Error:", error)
         return new NextResponse("Internal Server Error", { status: 500 })
     }
 }

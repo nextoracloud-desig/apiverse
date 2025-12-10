@@ -37,6 +37,7 @@ model User {
   savedApis              SavedApi[]
   sessions               Session[]
   apiKeys                UserApiKey[]
+  workspaces             Workspace[]
 }
 
 model Project {
@@ -293,4 +294,73 @@ model Notification {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ApiProvider {
+  id          String   @id @default(cuid())
+  name        String
+  baseUrl     String
+  authType    String   @default("none") // "none", "bearer", "header", "query"
+  authConfig  String?  // JSON string for storing credentials/config securely
+  docsUrl     String?
+  description String?
+  category    String?
+  source      String   @default("manual") // "manual", "auto-import"
+  approved    Boolean  @default(false)
+  
+  apiKeys     ApiKey[]
+  usageLogs   UsageLog[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  apiKeys   ApiKey[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ApiKey {
+  id           String      @id @default(cuid())
+  name         String
+  hashedSecret String
+  limit        Int         @default(1000)
+  usage        Int         @default(0)
+  revoked      Boolean     @default(false)
+  scopes       String?     // Comma separated scopes or JSON
+  lastUsedAt   DateTime?
+  
+  workspaceId  String
+  workspace    Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  
+  providerId   String?
+  provider     ApiProvider? @relation(fields: [providerId], references: [id])
+  
+  usageLogs    UsageLog[]
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model UsageLog {
+  id         String   @id @default(cuid())
+  method     String
+  path       String
+  statusCode Int
+  latency    Int      // ms
+  cost       Float    @default(0)
+  
+  apiKeyId   String?
+  apiKey     ApiKey?  @relation(fields: [apiKeyId], references: [id])
+  
+  providerId String?
+  provider   ApiProvider? @relation(fields: [providerId], references: [id])
+
+  timestamp  DateTime @default(now())
 }

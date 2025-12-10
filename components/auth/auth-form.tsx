@@ -15,55 +15,88 @@ interface AuthFormProps {
 export function AuthForm({ className }: AuthFormProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    // const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"; // snippet uses hardcoded /dashboard
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState<boolean>(true);
 
-    async function onSubmit(event: React.SyntheticEvent) {
-        event.preventDefault();
-        setIsLoading(true);
-        setError(null);
+    async function handleSignIn(e: React.FormEvent) {
+        e.preventDefault();
+        setErrorMsg(null);
+        setLoading(true);
+        const form = e.target as HTMLFormElement; // Cast to HTMLFormElement
+        // Use form.elements or direct access if named inputs, easiest is FormData or target casting
+        // User snippet used FormData from e.currentTarget. Adapting to be robust.
+        const formData = new FormData(form);
+        const email = String(formData.get('email') || '').trim();
+        const password = String(formData.get('password') || '');
 
-        const target = event.target as typeof event.target & {
-            email: { value: string };
-            password: { value: string };
-            name?: { value: string };
-            confirmPassword?: { value: string };
-        };
-
-        const email = target.email.value;
-        const password = target.password.value;
-        let name: string | undefined;
-
-        if (!isLogin) {
-            const confirmPassword = target.confirmPassword?.value;
-            if (password !== confirmPassword) {
-                setError("Passwords do not match");
-                setIsLoading(false);
+        try {
+            const res = await signIn('credentials', { redirect: false, email, password });
+            if (!res) {
+                setErrorMsg('Unexpected auth error, check server logs.');
+                setLoading(false);
                 return;
             }
-            name = target.name?.value;
+            if (res.error) {
+                setErrorMsg(res.error || 'Invalid email or password.');
+                setLoading(false);
+                return;
+            }
+            // success -> dashboard
+            router.push('/dashboard');
+            router.refresh();
+        } catch (err) {
+            console.error('AUTH DEBUG signIn error', err);
+            setErrorMsg('Unexpected auth error, check server logs.');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function handleCreateAccount(e: React.FormEvent) {
+        e.preventDefault();
+        setErrorMsg(null);
+        setLoading(true);
+        const form = e.target as HTMLFormElement;
+        const formData = new FormData(form);
+        const name = String(formData.get('name') || '').trim();
+        const email = String(formData.get('email') || '').trim();
+        const password = String(formData.get('password') || '');
+        const confirmPassword = String(formData.get('confirmPassword') || '');
+
+        if (password !== confirmPassword) {
+            setErrorMsg("Passwords do not match");
+            setLoading(false);
+            return;
         }
 
-        // UNIFIED FLOW: Calls signIn for both Login and Register
-        // The backend `authorize` function handles creating the user if they don't exist.
-        const result = await signIn("credentials", {
-            email,
-            password,
-            name, // Pass name (ignored by backend if user exists, used if creating new)
-            redirect: false,
-            callbackUrl,
-        });
-
-        setIsLoading(false);
-
-        if (result?.error) {
-            console.error("Auth error:", result.error);
-            setError(result.error);
-        } else {
-            router.push(callbackUrl);
+        try {
+            const r = await fetch('/api/auth/create-account', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password }),
+            });
+            if (!r.ok) {
+                const txt = await r.json(); // Assuming JSON error from my endpoint
+                setErrorMsg(txt.error || 'Something went wrong while creating your account.');
+                setLoading(false);
+                return;
+            }
+            // auto-login
+            const signRes = await signIn('credentials', { redirect: false, email, password });
+            if (!signRes || signRes.error) {
+                setErrorMsg(signRes?.error || 'Account created but auto-login failed.');
+                setLoading(false);
+                return;
+            }
+            router.push('/dashboard');
             router.refresh();
+        } catch (err) {
+            console.error('AUTH DEBUG create error', err);
+            setErrorMsg('Something went wrong, check server logs.');
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -80,19 +113,20 @@ export function AuthForm({ className }: AuthFormProps) {
                 </p>
             </div>
 
-            <form onSubmit={onSubmit}>
+            <form onSubmit={isLogin ? handleSignIn : handleCreateAccount}>
                 <div className="grid gap-4">
                     {!isLogin && (
                         <div className="grid gap-2">
                             <Label htmlFor="name">Name</Label>
                             <Input
                                 id="name"
+                                name="name"
                                 placeholder="John Doe"
                                 type="text"
                                 autoCapitalize="words"
                                 autoComplete="name"
                                 autoCorrect="off"
-                                disabled={isLoading}
+                                disabled={loading}
                                 required
                             />
                         </div>
@@ -101,12 +135,13 @@ export function AuthForm({ className }: AuthFormProps) {
                         <Label htmlFor="email">Email</Label>
                         <Input
                             id="email"
+                            name="email"
                             placeholder="name@example.com"
                             type="email"
                             autoCapitalize="none"
                             autoComplete="email"
                             autoCorrect="off"
-                            disabled={isLoading}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -114,11 +149,12 @@ export function AuthForm({ className }: AuthFormProps) {
                         <Label htmlFor="password">Password</Label>
                         <Input
                             id="password"
+                            name="password"
                             placeholder="••••••••"
                             type="password"
                             autoCapitalize="none"
                             autoComplete={isLogin ? "current-password" : "new-password"}
-                            disabled={isLoading}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -127,18 +163,19 @@ export function AuthForm({ className }: AuthFormProps) {
                             <Label htmlFor="confirmPassword">Confirm Password</Label>
                             <Input
                                 id="confirmPassword"
+                                name="confirmPassword"
                                 placeholder="••••••••"
                                 type="password"
                                 autoCapitalize="none"
                                 autoComplete="new-password"
-                                disabled={isLoading}
+                                disabled={loading}
                                 required
                             />
                         </div>
                     )}
-                    {error && <p className="text-sm text-destructive">{error}</p>}
-                    <Button disabled={isLoading}>
-                        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {errorMsg && <p className="text-sm text-destructive">{errorMsg}</p>}
+                    <Button disabled={loading}>
+                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         {isLogin ? "Sign In" : "Create free account"}
                     </Button>
                 </div>
@@ -151,7 +188,7 @@ export function AuthForm({ className }: AuthFormProps) {
                             type="button"
                             onClick={() => {
                                 setIsLogin(false);
-                                setError(null);
+                                setErrorMsg(null);
                             }}
                             className="underline underline-offset-4 hover:text-primary"
                         >
@@ -165,7 +202,7 @@ export function AuthForm({ className }: AuthFormProps) {
                             type="button"
                             onClick={() => {
                                 setIsLogin(true);
-                                setError(null);
+                                setErrorMsg(null);
                             }}
                             className="underline underline-offset-4 hover:text-primary"
                         >

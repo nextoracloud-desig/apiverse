@@ -1,0 +1,19 @@
+{
+  "total": 1050,
+  "files": [
+    "apiverse_providers_1.json",
+    "apiverse_providers_2.json"
+  ],
+  "categories": {
+    "AI": 117,
+    "Finance": 117,
+    "Crypto": 117,
+    "Sports": 117,
+    "Weather": 117,
+    "Maps": 117,
+    "Social": 116,
+    "Development": 116,
+    "Data": 116
+  },
+  "generatedAt": "2025-12-12T16:50:34.284Z"
+}

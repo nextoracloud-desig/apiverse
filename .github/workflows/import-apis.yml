@@ -38,5 +38,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PROVIDER_SECRETS_JSON: ${{ secrets.PROVIDER_SECRETS_JSON }}
           RAW_TEST_KEY: ${{ secrets.RAW_TEST_KEY }}
+          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
         run: |
-          npx tsx scripts/test-gateway.ts
+          echo "Testing deployed gateway at: $DEPLOY_URL"
+          npx tsx scripts/test-gateway.ts "$DEPLOY_URL"

@@ -23,11 +23,11 @@ export default async function SavedApisPage() {
     });
 
     // Map saved records to catalog definitions
-    const savedApis = savedRecords
-        .map((record) => {
-            const api = getApiById(record.apiId);
+    const savedApis = (await Promise.all(savedRecords
+        .map(async (record) => {
+            const api = await getApiById(record.apiId);
             return api ? { ...api, savedAt: record.createdAt } : null;
-        })
+        })))
         .filter((api): api is NonNullable<typeof api> => api !== null);
 
     return (

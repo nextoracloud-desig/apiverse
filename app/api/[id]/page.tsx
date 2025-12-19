@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 import { RatingWidget } from "@/components/RatingWidget";
 
 export default async function ApiDetailsPage({ params }: { params: { id: string } }) {
-    const apiDefinition = getApiById(params.id);
+    const apiDefinition = await getApiById(params.id);
     let dbApi = null;
     try {
         dbApi = await prisma.api.findUnique({

@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import fs from "fs"
 import path from "path"
 import { normalizeApiData } from "@/scripts/helpers/normalize"
-
-const prisma = new PrismaClient()
 
 // Configuration Interface
 export interface ImportConfig {
@@ -107,6 +105,12 @@ export async function runImport(config: ImportConfig) {
         }
     }
 
+    // 5. Global Backfill (Production Safety Net)
+    if (config.allowProd) {
+        console.log("Starting Global Endpoint Backfill...");
+        await backfillAllEndpoints();
+    }
+
     const duration = (Date.now() - stats.startTime) / 1000;
     console.log("------------------------------------------");
     console.log("IMPORT COMPLETED");
@@ -192,6 +196,24 @@ async function processBatch(batch: any[], config: ImportConfig, stats: ImportSta
                 console.error(`Row fail ${item.id || 'unknown'}: ${inner.message}`);
             }
         }
+    }
+}
+
+// Helper: Iterate all providers to ensure endpoints
+async function backfillAllEndpoints() {
+    try {
+        const allIds = await prisma.apiProvider.findMany({ select: { id: true } });
+        console.log(`Backfilling endpoints for ${allIds.length} APIs...`);
+
+        let count = 0;
+        for (const { id } of allIds) {
+            await ensureDefaultEndpoints(id);
+            count++;
+            if (count % 50 === 0) process.stdout.write('+');
+        }
+        console.log("\nBackfill complete.");
+    } catch (e: any) {
+        console.error("Backfill failed:", e.message);
     }
 }
 

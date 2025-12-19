@@ -25,6 +25,12 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
         // Continue with static definition only
     }
 
+    // Fetch Endpoints directly from DB (Production Safe)
+    const endpoints = await prisma.apiEndpoint.findMany({
+        where: { apiId: params.id },
+        orderBy: { path: "asc" }
+    });
+
     if (!apiDefinition && !dbApi) {
         notFound();
     }
@@ -238,13 +244,21 @@ export default async function ApiDetailsPage({ params }: { params: { id: string 
                                 </CardHeader>
                                 <CardContent>
                                     <div className="space-y-4">
-                                        <div className="rounded-md border bg-muted/50 p-4">
-                                            <div className="flex items-center gap-2 font-mono text-sm">
-                                                <Badge>GET</Badge>
-                                                <span className="text-muted-foreground">{(api.sampleEndpointUrl || "GET /").split(' ')[1]}</span>
+                                        {endpoints.length > 0 ? (
+                                            endpoints.map((ep) => (
+                                                <div key={ep.id} className="rounded-md border bg-muted/50 p-4">
+                                                    <div className="flex items-center gap-2 font-mono text-sm">
+                                                        <Badge variant="secondary">{ep.method}</Badge>
+                                                        <span className="text-muted-foreground">{ep.path}</span>
+                                                    </div>
+                                                    {ep.summary && <p className="mt-2 text-sm text-muted-foreground">{ep.summary}</p>}
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="p-8 text-center border rounded border-dashed bg-muted/20">
+                                                <p className="text-muted-foreground">No endpoints available for this API.</p>
                                             </div>
-                                            <p className="mt-2 text-sm text-muted-foreground">Retrieves the main resource data.</p>
-                                        </div>
+                                        )}
                                     </div>
                                 </CardContent>
                             </Card>

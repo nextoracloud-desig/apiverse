@@ -1,0 +1,30 @@
+name: Importer Sanity Check
+
+on:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'prisma/**'
+  pull_request:
+
+jobs:
+  test-importer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install Deps
+        run: npm ci
+        
+      - name: Generate Prisma
+        run: npx prisma generate
+        
+      - name: Run Debug Script
+        run: npx tsx scripts/debug-import.ts
+        
+      - name: Run Importer Dry Run
+        run: npx tsx scripts/import-apis.ts --dry

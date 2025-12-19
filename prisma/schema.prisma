@@ -14,7 +14,6 @@ model User {
   emailVerified          DateTime?
   image                  String?
   password               String?
-  passwordHash           String? // Restored field for credentials auth
   role                   String                @default("user")
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @updatedAt
@@ -24,6 +23,7 @@ model User {
   stripeCurrentPeriodEnd DateTime?
   plan                   String                @default("free")
   onboarded              Boolean               @default(false)
+  passwordHash           String?
   accounts               Account[]
   feedback               ApiFeedback[]
   apiViews               ApiView[]
@@ -297,70 +297,60 @@ model Notification {
 }
 
 model ApiProvider {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   baseUrl     String
-  authType    String   @default("none") // "none", "bearer", "header", "query"
-  authConfig  String?  // JSON string for storing credentials/config securely
+  authType    String     @default("none")
+  authConfig  String?
   docsUrl     String?
   description String?
   category    String?
-  source      String   @default("manual") // "manual", "auto-import"
-  approved    Boolean  @default(false)
-  
+  source      String     @default("manual")
+  approved    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   apiKeys     ApiKey[]
   usageLogs   UsageLog[]
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 model Workspace {
   id        String   @id @default(cuid())
   name      String
   ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  apiKeys   ApiKey[]
-  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  apiKeys   ApiKey[]
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 }
 
 model ApiKey {
-  id           String      @id @default(cuid())
+  id           String       @id @default(cuid())
   name         String
   hashedSecret String
-  limit        Int         @default(1000)
-  usage        Int         @default(0)
-  revoked      Boolean     @default(false)
-  scopes       String?     // Comma separated scopes or JSON
+  limit        Int          @default(1000)
+  usage        Int          @default(0)
+  revoked      Boolean      @default(false)
+  scopes       String?
   lastUsedAt   DateTime?
-  
   workspaceId  String
-  workspace    Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  
   providerId   String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   provider     ApiProvider? @relation(fields: [providerId], references: [id])
-  
+  workspace    Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   usageLogs    UsageLog[]
-
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
 }
 
 model UsageLog {
-  id         String   @id @default(cuid())
+  id         String       @id @default(cuid())
   method     String
   path       String
   statusCode Int
-  latency    Int      // ms
-  cost       Float    @default(0)
-  
+  latency    Int
+  cost       Float        @default(0)
   apiKeyId   String?
-  apiKey     ApiKey?  @relation(fields: [apiKeyId], references: [id])
-  
   providerId String?
+  timestamp  DateTime     @default(now())
+  apiKey     ApiKey?      @relation(fields: [apiKeyId], references: [id])
   provider   ApiProvider? @relation(fields: [providerId], references: [id])
-
-  timestamp  DateTime @default(now())
 }

@@ -8,7 +8,7 @@ import { SlidersHorizontal } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
-export default function ExplorePage({ searchParams }: { searchParams: { page?: string, search?: string, category?: string, pricing?: string, sort?: string, stack?: string } }) {
+export default async function ExplorePage({ searchParams }: { searchParams: { page?: string, search?: string, category?: string, pricing?: string, sort?: string, stack?: string } }) {
     const page = Number(searchParams.page) || 1;
     const search = searchParams.search || "";
     // If stack is present but no explicit search, use stack as search query context
@@ -18,7 +18,8 @@ export default function ExplorePage({ searchParams }: { searchParams: { page?: s
     const sort = searchParams.sort || "featured";
     const stackPrompt = searchParams.stack || "";
 
-    const { data: apis, total, totalPages } = searchApis({
+    // Await the async search
+    const { data: apis, total, totalPages } = await searchApis({
         search: effectiveSearch,
         category,
         pricing,
@@ -27,10 +28,12 @@ export default function ExplorePage({ searchParams }: { searchParams: { page?: s
         pageSize: 12
     });
 
-    // Extract unique categories for filter
-    const allApis = getAllApis();
-    const categoriesSet = new Set(allApis.map(a => a.category));
-    const categories = ["All", ...Array.from(categoriesSet).sort()];
+    // Handle categories for filter (can be optimized to distinct query later)
+    // For now, hardcode generic or fetch distinct
+    const categories = ["All", "AI", "DevTools", "Social Media", "Finance", "Weather", "Media", "Travel", "Productivity", "Other"];
+    // Or async fetch:
+    // const all = await getAllApis();
+    // const categoriesSet = new Set(all.map(a => a.category));
 
     return (
         <div className="space-y-8 pb-12 container py-8">
@@ -38,7 +41,7 @@ export default function ExplorePage({ searchParams }: { searchParams: { page?: s
                 <div className="space-y-1">
                     <h1 className="text-3xl font-bold tracking-tight">Explore APIs</h1>
                     <p className="text-muted-foreground max-w-lg">
-                        Discover {getAllApis().length}+ APIs curated for developers.
+                        Discover {total}+ APIs curated for developers.
                         Filter by category, pricing, or confidence score.
                     </p>
                 </div>

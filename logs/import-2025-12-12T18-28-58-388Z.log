@@ -1,0 +1,24 @@
+[2025-12-12T18:28:58.393Z] [INFO] Configuration: {"BATCH_SIZE":50,"DRY_RUN":true,"FORCE":false,"ALLOW_PROD":false}
+[2025-12-12T18:28:58.400Z] [INFO] Loaded 1050 raw items.
+[2025-12-12T18:28:58.401Z] [INFO] Starting processing of 21 batches...
+[2025-12-12T18:28:58.401Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.402Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.402Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.402Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.403Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.403Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.403Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.404Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.404Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.404Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.405Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.405Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.405Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.409Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.411Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.412Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.412Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.413Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.413Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.413Z] [INFO] [DRY] Would upsert batch of 50 items.
+[2025-12-12T18:28:58.413Z] [INFO] [DRY] Would upsert batch of 50 items.

@@ -8,6 +8,12 @@ const nextConfig = {
             },
         ],
     },
+    experimental: {
+        outputFileTracingIncludes: {
+            '/api/admin/run-import': ['./data/**/*'],
+            '/api/cron/import': ['./data/**/*'],
+        },
+    },
 };
 
 module.exports = nextConfig;

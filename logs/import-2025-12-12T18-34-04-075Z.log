@@ -1,0 +1,3 @@
+[2025-12-12T18:34:04.082Z] [INFO] Configuration: {"BATCH_SIZE":50,"DRY_RUN":false,"FORCE":false,"ALLOW_PROD":true}
+[2025-12-12T18:34:04.090Z] [INFO] Loaded 1050 raw items.
+[2025-12-12T18:34:04.092Z] [INFO] Starting processing of 21 batches...

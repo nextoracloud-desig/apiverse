@@ -1,0 +1,2 @@
+[2025-12-12T18:29:05.619Z] [INFO] Configuration: {"BATCH_SIZE":50,"DRY_RUN":false,"FORCE":false,"ALLOW_PROD":false}
+[2025-12-12T18:29:05.620Z] [ERROR] PRODUCTION PROTECTION: DATABASE_URL points to remote. Use --allow-prod or --dry.

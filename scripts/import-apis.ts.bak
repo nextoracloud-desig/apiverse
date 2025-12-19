@@ -1,0 +1,24 @@
+import fs from "fs";
+import path from "path";
+import fetch from "node-fetch"; // if needed
+
+async function loadDataset() {
+    const fileA = path.join(process.cwd(), "data", "apiverse_providers_1.json");
+    const fileB = path.join(process.cwd(), "data", "apiverse_providers_2.json");
+
+    if (fs.existsSync(fileA) && fs.existsSync(fileB)) {
+        const list1 = JSON.parse(fs.readFileSync(fileA, "utf8") || "[]");
+        const list2 = JSON.parse(fs.readFileSync(fileB, "utf8") || "[]");
+        return [...list1, ...list2];
+    }
+
+    // fallback to network (old behavior)
+    try {
+        const res = await fetch("https://api.publicapis.org/entries"); // your fetch logic
+        const json = await res.json();
+        return json.entries || [];
+    } catch (err) {
+        console.warn("Failed to fetch remote list, using empty fallback", err);
+        return [];
+    }
+}

@@ -1,0 +1,408 @@
+[2025-12-12T18:38:04.737Z] [INFO] Configuration: {"BATCH_SIZE":50,"DRY_RUN":false,"FORCE":false,"ALLOW_PROD":true}
+[2025-12-12T18:38:04.745Z] [INFO] Loaded 1050 raw items.
+[2025-12-12T18:38:04.746Z] [INFO] Starting processing of 21 batches...
+[2025-12-12T18:38:06.049Z] [WARN] Batch transaction failed. Retrying row-by-row. Error: 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:91:43
+
+  88 // Ensure required unique
+  89 if (!filtered.id) throw new Error("Missing ID");
+  90 
+→ 91 return prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:07.328Z] [ERROR] Row failed: OpenAI (openai) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:08.369Z] [ERROR] Row failed: Stripe (stripe) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:09.083Z] [ERROR] Row failed: Open Crypto Flow 0 (open-crypto-flow-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:10.545Z] [ERROR] Row failed: Smart Sports Sync 0 (smart-sports-sync-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:11.826Z] [ERROR] Row failed: Secure Weather Stream 0 (secure-weather-stream-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:13.082Z] [ERROR] Row failed: Cloud Maps Base 0 (cloud-maps-base-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:14.361Z] [ERROR] Row failed: Data Social Core 0 (data-social-core-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:15.637Z] [ERROR] Row failed: NextGen Development Hub 0 (nextgen-development-hub-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:16.894Z] [ERROR] Row failed: Global Data Connect 0 (global-data-connect-0) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:18.166Z] [ERROR] Row failed: Fast AI Link 1 (fast-ai-link-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:18.970Z] [ERROR] Row failed: Open Finance Flow 1 (open-finance-flow-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:20.637Z] [ERROR] Row failed: Smart Crypto Sync 1 (smart-crypto-sync-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:21.877Z] [ERROR] Row failed: Secure Sports Stream 1 (secure-sports-stream-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:23.104Z] [ERROR] Row failed: Cloud Weather Base 1 (cloud-weather-base-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:24.420Z] [ERROR] Row failed: Data Maps Core 1 (data-maps-core-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:25.678Z] [ERROR] Row failed: NextGen Social Hub 1 (nextgen-social-hub-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:26.939Z] [ERROR] Row failed: Global Development Connect 1 (global-development-connect-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:28.139Z] [ERROR] Row failed: Fast Data Link 1 (fast-data-link-1) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:29.168Z] [ERROR] Row failed: Open AI Flow 2 (open-ai-flow-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:29.988Z] [ERROR] Row failed: Smart Finance Sync 2 (smart-finance-sync-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:31.239Z] [ERROR] Row failed: Secure Crypto Stream 2 (secure-crypto-stream-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:33.177Z] [ERROR] Row failed: Cloud Sports Base 2 (cloud-sports-base-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:34.420Z] [ERROR] Row failed: Data Weather Core 2 (data-weather-core-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:36.105Z] [ERROR] Row failed: NextGen Maps Hub 2 (nextgen-maps-hub-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:37.667Z] [ERROR] Row failed: Global Social Connect 2 (global-social-connect-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:38.900Z] [ERROR] Row failed: Fast Development Link 2 (fast-development-link-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:39.689Z] [ERROR] Row failed: Open Data Flow 2 (open-data-flow-2) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:41.307Z] [ERROR] Row failed: Smart AI Sync 3 (smart-ai-sync-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:42.538Z] [ERROR] Row failed: Secure Finance Stream 3 (secure-finance-stream-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:43.740Z] [ERROR] Row failed: Cloud Crypto Base 3 (cloud-crypto-base-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:44.997Z] [ERROR] Row failed: Data Sports Core 3 (data-sports-core-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:46.225Z] [ERROR] Row failed: NextGen Weather Hub 3 (nextgen-weather-hub-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:47.427Z] [ERROR] Row failed: Global Maps Connect 3 (global-maps-connect-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:48.659Z] [ERROR] Row failed: Fast Social Link 3 (fast-social-link-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:49.776Z] [ERROR] Row failed: Open Development Flow 3 (open-development-flow-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:50.492Z] [ERROR] Row failed: Smart Data Sync 3 (smart-data-sync-3) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:51.766Z] [ERROR] Row failed: Secure AI Stream 4 (secure-ai-stream-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:52.988Z] [ERROR] Row failed: Cloud Finance Base 4 (cloud-finance-base-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:54.223Z] [ERROR] Row failed: Data Crypto Core 4 (data-crypto-core-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:55.438Z] [ERROR] Row failed: NextGen Sports Hub 4 (nextgen-sports-hub-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:56.723Z] [ERROR] Row failed: Global Weather Connect 4 (global-weather-connect-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:57.854Z] [ERROR] Row failed: Fast Maps Link 4 (fast-maps-link-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:38:59.617Z] [ERROR] Row failed: Open Social Flow 4 (open-social-flow-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found
+[2025-12-12T18:39:00.345Z] [ERROR] Row failed: Smart Development Sync 4 (smart-development-sync-4) - 
+Invalid `prisma.apiProvider.upsert()` invocation in
+C:\Users\agraj\api\apiverse\scripts\import-apis.ts:113:42
+
+  110     continue;
+  111 }
+  112 
+→ 113 await prisma.apiProvider.upsert(
+Error querying the database: FATAL: Tenant or user not found

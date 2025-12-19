@@ -5,6 +5,8 @@ import { PrismaClient } from "@prisma/client"
 // Assuming @/lib/prisma exists (importer.ts used it).
 import { prisma } from "@/lib/prisma";
 
+export type PricingType = "Free" | "Freemium" | "Paid" | "Trial";
+
 export interface ApiDefinition {
     id: string;
     slug: string; // derived from id if not present
@@ -14,6 +16,7 @@ export interface ApiDefinition {
     logoInitials: string;
     logoUrl?: string; // from meta or column
     shortDescription: string;
+    longDescription?: string;
     confidenceScore: number;
     rating: number; // 0-5
     reviewCount: number;

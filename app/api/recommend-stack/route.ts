@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         let recommendations: any[] = [];
         const seenIds = new Set();
 
-        const catalogResults = searchApis({ search: description, pageSize: 5 }).data;
+        const catalogResults = (await searchApis({ search: description, pageSize: 5 })).data;
 
         catalogResults.forEach(api => {
             if (!seenIds.has(api.id)) {
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
         // Fallback if no direct matches
         if (recommendations.length === 0) {
-            const popular = searchApis({ sort: "popularity", pageSize: 3 }).data;
+            const popular = (await searchApis({ sort: "popularity", pageSize: 3 })).data;
             popular.forEach(api => {
                 recommendations.push({
                     role: "Popular Choice",

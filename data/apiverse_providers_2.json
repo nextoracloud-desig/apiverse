@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "global-finance-connect-111",
+    "name": "Global Finance Connect 111",
+    "category": "Finance",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Finance API for developers. Provides reliable access to finance data.",
+    "baseUrl": "https://api.global-finance-connect-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-finance-connect-111.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 91,
+    "verified": true,
+    "tags": [
+      "finance",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-finance-connect-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-crypto-link-111",
+    "name": "Fast Crypto Link 111",
+    "category": "Crypto",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Crypto API for developers. Provides reliable access to crypto data.",
+    "baseUrl": "https://api.fast-crypto-link-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-crypto-link-111.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 92,
+    "verified": true,
+    "tags": [
+      "crypto",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-crypto-link-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "open-sports-flow-111",
+    "name": "Open Sports Flow 111",
+    "category": "Sports",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Sports API for developers. Provides reliable access to sports data.",
+    "baseUrl": "https://api.open-sports-flow-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://open-sports-flow-111.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 93,
+    "verified": true,
+    "tags": [
+      "sports",
+      "public"
+    ],
+    "owner": "Open Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.open-sports-flow-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "smart-weather-sync-111",
+    "name": "Smart Weather Sync 111",
+    "category": "Weather",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Weather API for developers. Provides reliable access to weather data.",
+    "baseUrl": "https://api.smart-weather-sync-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://smart-weather-sync-111.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 94,
+    "verified": true,
+    "tags": [
+      "weather",
+      "public"
+    ],
+    "owner": "Smart Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.smart-weather-sync-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "secure-maps-stream-111",
+    "name": "Secure Maps Stream 111",
+    "category": "Maps",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Maps API for developers. Provides reliable access to maps data.",
+    "baseUrl": "https://api.secure-maps-stream-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://secure-maps-stream-111.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 95,
+    "verified": true,
+    "tags": [
+      "maps",
+      "public"
+    ],
+    "owner": "Secure Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.secure-maps-stream-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "cloud-social-base-111",
+    "name": "Cloud Social Base 111",
+    "category": "Social",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Social API for developers. Provides reliable access to social data.",
+    "baseUrl": "https://api.cloud-social-base-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://cloud-social-base-111.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 96,
+    "verified": true,
+    "tags": [
+      "social",
+      "public"
+    ],
+    "owner": "Cloud Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.cloud-social-base-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "data-development-core-111",
+    "name": "Data Development Core 111",
+    "category": "Development",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Development API for developers. Provides reliable access to development data.",
+    "baseUrl": "https://api.data-development-core-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://data-development-core-111.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 97,
+    "verified": true,
+    "tags": [
+      "development",
+      "public"
+    ],
+    "owner": "Data Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.data-development-core-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "nextgen-data-hub-111",
+    "name": "NextGen Data Hub 111",
+    "category": "Data",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Data API for developers. Provides reliable access to data data.",
+    "baseUrl": "https://api.nextgen-data-hub-111.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://nextgen-data-hub-111.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 98,
+    "verified": true,
+    "tags": [
+      "data",
+      "public"
+    ],
+    "owner": "NextGen Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.nextgen-data-hub-111.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "global-ai-connect-112",
+    "name": "Global AI Connect 112",
+    "category": "AI",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance AI API for developers. Provides reliable access to ai data.",
+    "baseUrl": "https://api.global-ai-connect-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-ai-connect-112.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 90,
+    "verified": true,
+    "tags": [
+      "ai",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-ai-connect-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-finance-link-112",
+    "name": "Fast Finance Link 112",
+    "category": "Finance",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Finance API for developers. Provides reliable access to finance data.",
+    "baseUrl": "https://api.fast-finance-link-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-finance-link-112.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 91,
+    "verified": true,
+    "tags": [
+      "finance",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-finance-link-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "open-crypto-flow-112",
+    "name": "Open Crypto Flow 112",
+    "category": "Crypto",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Crypto API for developers. Provides reliable access to crypto data.",
+    "baseUrl": "https://api.open-crypto-flow-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://open-crypto-flow-112.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 92,
+    "verified": true,
+    "tags": [
+      "crypto",
+      "public"
+    ],
+    "owner": "Open Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.open-crypto-flow-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "smart-sports-sync-112",
+    "name": "Smart Sports Sync 112",
+    "category": "Sports",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Sports API for developers. Provides reliable access to sports data.",
+    "baseUrl": "https://api.smart-sports-sync-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://smart-sports-sync-112.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 93,
+    "verified": true,
+    "tags": [
+      "sports",
+      "public"
+    ],
+    "owner": "Smart Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.smart-sports-sync-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "secure-weather-stream-112",
+    "name": "Secure Weather Stream 112",
+    "category": "Weather",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Weather API for developers. Provides reliable access to weather data.",
+    "baseUrl": "https://api.secure-weather-stream-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://secure-weather-stream-112.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 94,
+    "verified": true,
+    "tags": [
+      "weather",
+      "public"
+    ],
+    "owner": "Secure Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.secure-weather-stream-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "cloud-maps-base-112",
+    "name": "Cloud Maps Base 112",
+    "category": "Maps",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Maps API for developers. Provides reliable access to maps data.",
+    "baseUrl": "https://api.cloud-maps-base-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://cloud-maps-base-112.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 95,
+    "verified": true,
+    "tags": [
+      "maps",
+      "public"
+    ],
+    "owner": "Cloud Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.cloud-maps-base-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "data-social-core-112",
+    "name": "Data Social Core 112",
+    "category": "Social",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Social API for developers. Provides reliable access to social data.",
+    "baseUrl": "https://api.data-social-core-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://data-social-core-112.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 96,
+    "verified": true,
+    "tags": [
+      "social",
+      "public"
+    ],
+    "owner": "Data Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.data-social-core-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "nextgen-development-hub-112",
+    "name": "NextGen Development Hub 112",
+    "category": "Development",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Development API for developers. Provides reliable access to development data.",
+    "baseUrl": "https://api.nextgen-development-hub-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://nextgen-development-hub-112.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 97,
+    "verified": true,
+    "tags": [
+      "development",
+      "public"
+    ],
+    "owner": "NextGen Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.nextgen-development-hub-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "global-data-connect-112",
+    "name": "Global Data Connect 112",
+    "category": "Data",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Data API for developers. Provides reliable access to data data.",
+    "baseUrl": "https://api.global-data-connect-112.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-data-connect-112.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 98,
+    "verified": true,
+    "tags": [
+      "data",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-data-connect-112.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-ai-link-113",
+    "name": "Fast AI Link 113",
+    "category": "AI",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance AI API for developers. Provides reliable access to ai data.",
+    "baseUrl": "https://api.fast-ai-link-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-ai-link-113.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 90,
+    "verified": true,
+    "tags": [
+      "ai",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-ai-link-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "open-finance-flow-113",
+    "name": "Open Finance Flow 113",
+    "category": "Finance",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Finance API for developers. Provides reliable access to finance data.",
+    "baseUrl": "https://api.open-finance-flow-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://open-finance-flow-113.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 91,
+    "verified": true,
+    "tags": [
+      "finance",
+      "public"
+    ],
+    "owner": "Open Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.open-finance-flow-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "smart-crypto-sync-113",
+    "name": "Smart Crypto Sync 113",
+    "category": "Crypto",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Crypto API for developers. Provides reliable access to crypto data.",
+    "baseUrl": "https://api.smart-crypto-sync-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://smart-crypto-sync-113.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 92,
+    "verified": true,
+    "tags": [
+      "crypto",
+      "public"
+    ],
+    "owner": "Smart Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.smart-crypto-sync-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "secure-sports-stream-113",
+    "name": "Secure Sports Stream 113",
+    "category": "Sports",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Sports API for developers. Provides reliable access to sports data.",
+    "baseUrl": "https://api.secure-sports-stream-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://secure-sports-stream-113.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 93,
+    "verified": true,
+    "tags": [
+      "sports",
+      "public"
+    ],
+    "owner": "Secure Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.secure-sports-stream-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "cloud-weather-base-113",
+    "name": "Cloud Weather Base 113",
+    "category": "Weather",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Weather API for developers. Provides reliable access to weather data.",
+    "baseUrl": "https://api.cloud-weather-base-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://cloud-weather-base-113.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 94,
+    "verified": true,
+    "tags": [
+      "weather",
+      "public"
+    ],
+    "owner": "Cloud Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.cloud-weather-base-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "data-maps-core-113",
+    "name": "Data Maps Core 113",
+    "category": "Maps",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Maps API for developers. Provides reliable access to maps data.",
+    "baseUrl": "https://api.data-maps-core-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://data-maps-core-113.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 95,
+    "verified": true,
+    "tags": [
+      "maps",
+      "public"
+    ],
+    "owner": "Data Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.data-maps-core-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "nextgen-social-hub-113",
+    "name": "NextGen Social Hub 113",
+    "category": "Social",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Social API for developers. Provides reliable access to social data.",
+    "baseUrl": "https://api.nextgen-social-hub-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://nextgen-social-hub-113.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 96,
+    "verified": true,
+    "tags": [
+      "social",
+      "public"
+    ],
+    "owner": "NextGen Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.nextgen-social-hub-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "global-development-connect-113",
+    "name": "Global Development Connect 113",
+    "category": "Development",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Development API for developers. Provides reliable access to development data.",
+    "baseUrl": "https://api.global-development-connect-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-development-connect-113.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 97,
+    "verified": true,
+    "tags": [
+      "development",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-development-connect-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-data-link-113",
+    "name": "Fast Data Link 113",
+    "category": "Data",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Data API for developers. Provides reliable access to data data.",
+    "baseUrl": "https://api.fast-data-link-113.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-data-link-113.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 98,
+    "verified": true,
+    "tags": [
+      "data",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-data-link-113.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "open-ai-flow-114",
+    "name": "Open AI Flow 114",
+    "category": "AI",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance AI API for developers. Provides reliable access to ai data.",
+    "baseUrl": "https://api.open-ai-flow-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://open-ai-flow-114.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 90,
+    "verified": true,
+    "tags": [
+      "ai",
+      "public"
+    ],
+    "owner": "Open Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.open-ai-flow-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "smart-finance-sync-114",
+    "name": "Smart Finance Sync 114",
+    "category": "Finance",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Finance API for developers. Provides reliable access to finance data.",
+    "baseUrl": "https://api.smart-finance-sync-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://smart-finance-sync-114.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 91,
+    "verified": true,
+    "tags": [
+      "finance",
+      "public"
+    ],
+    "owner": "Smart Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.smart-finance-sync-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "secure-crypto-stream-114",
+    "name": "Secure Crypto Stream 114",
+    "category": "Crypto",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Crypto API for developers. Provides reliable access to crypto data.",
+    "baseUrl": "https://api.secure-crypto-stream-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://secure-crypto-stream-114.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 92,
+    "verified": true,
+    "tags": [
+      "crypto",
+      "public"
+    ],
+    "owner": "Secure Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.secure-crypto-stream-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "cloud-sports-base-114",
+    "name": "Cloud Sports Base 114",
+    "category": "Sports",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Sports API for developers. Provides reliable access to sports data.",
+    "baseUrl": "https://api.cloud-sports-base-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://cloud-sports-base-114.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 93,
+    "verified": true,
+    "tags": [
+      "sports",
+      "public"
+    ],
+    "owner": "Cloud Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.cloud-sports-base-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "data-weather-core-114",
+    "name": "Data Weather Core 114",
+    "category": "Weather",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Weather API for developers. Provides reliable access to weather data.",
+    "baseUrl": "https://api.data-weather-core-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://data-weather-core-114.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 94,
+    "verified": true,
+    "tags": [
+      "weather",
+      "public"
+    ],
+    "owner": "Data Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.data-weather-core-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "nextgen-maps-hub-114",
+    "name": "NextGen Maps Hub 114",
+    "category": "Maps",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Maps API for developers. Provides reliable access to maps data.",
+    "baseUrl": "https://api.nextgen-maps-hub-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://nextgen-maps-hub-114.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 95,
+    "verified": true,
+    "tags": [
+      "maps",
+      "public"
+    ],
+    "owner": "NextGen Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.nextgen-maps-hub-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "global-social-connect-114",
+    "name": "Global Social Connect 114",
+    "category": "Social",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Social API for developers. Provides reliable access to social data.",
+    "baseUrl": "https://api.global-social-connect-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-social-connect-114.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 96,
+    "verified": true,
+    "tags": [
+      "social",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-social-connect-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-development-link-114",
+    "name": "Fast Development Link 114",
+    "category": "Development",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Development API for developers. Provides reliable access to development data.",
+    "baseUrl": "https://api.fast-development-link-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-development-link-114.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 97,
+    "verified": true,
+    "tags": [
+      "development",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-development-link-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "open-data-flow-114",
+    "name": "Open Data Flow 114",
+    "category": "Data",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Data API for developers. Provides reliable access to data data.",
+    "baseUrl": "https://api.open-data-flow-114.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://open-data-flow-114.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 98,
+    "verified": true,
+    "tags": [
+      "data",
+      "public"
+    ],
+    "owner": "Open Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.open-data-flow-114.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "smart-ai-sync-115",
+    "name": "Smart AI Sync 115",
+    "category": "AI",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance AI API for developers. Provides reliable access to ai data.",
+    "baseUrl": "https://api.smart-ai-sync-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://smart-ai-sync-115.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 90,
+    "verified": true,
+    "tags": [
+      "ai",
+      "public"
+    ],
+    "owner": "Smart Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.smart-ai-sync-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "secure-finance-stream-115",
+    "name": "Secure Finance Stream 115",
+    "category": "Finance",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Finance API for developers. Provides reliable access to finance data.",
+    "baseUrl": "https://api.secure-finance-stream-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://secure-finance-stream-115.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 91,
+    "verified": true,
+    "tags": [
+      "finance",
+      "public"
+    ],
+    "owner": "Secure Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.secure-finance-stream-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "cloud-crypto-base-115",
+    "name": "Cloud Crypto Base 115",
+    "category": "Crypto",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Crypto API for developers. Provides reliable access to crypto data.",
+    "baseUrl": "https://api.cloud-crypto-base-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://cloud-crypto-base-115.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 92,
+    "verified": true,
+    "tags": [
+      "crypto",
+      "public"
+    ],
+    "owner": "Cloud Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.cloud-crypto-base-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "data-sports-core-115",
+    "name": "Data Sports Core 115",
+    "category": "Sports",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Sports API for developers. Provides reliable access to sports data.",
+    "baseUrl": "https://api.data-sports-core-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://data-sports-core-115.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 93,
+    "verified": true,
+    "tags": [
+      "sports",
+      "public"
+    ],
+    "owner": "Data Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.data-sports-core-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "nextgen-weather-hub-115",
+    "name": "NextGen Weather Hub 115",
+    "category": "Weather",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Weather API for developers. Provides reliable access to weather data.",
+    "baseUrl": "https://api.nextgen-weather-hub-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://nextgen-weather-hub-115.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 94,
+    "verified": true,
+    "tags": [
+      "weather",
+      "public"
+    ],
+    "owner": "NextGen Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.nextgen-weather-hub-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "global-maps-connect-115",
+    "name": "Global Maps Connect 115",
+    "category": "Maps",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Maps API for developers. Provides reliable access to maps data.",
+    "baseUrl": "https://api.global-maps-connect-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-maps-connect-115.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 95,
+    "verified": true,
+    "tags": [
+      "maps",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-maps-connect-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-social-link-115",
+    "name": "Fast Social Link 115",
+    "category": "Social",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Social API for developers. Provides reliable access to social data.",
+    "baseUrl": "https://api.fast-social-link-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-social-link-115.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 96,
+    "verified": true,
+    "tags": [
+      "social",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-social-link-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "open-development-flow-115",
+    "name": "Open Development Flow 115",
+    "category": "Development",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Development API for developers. Provides reliable access to development data.",
+    "baseUrl": "https://api.open-development-flow-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://open-development-flow-115.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 97,
+    "verified": true,
+    "tags": [
+      "development",
+      "public"
+    ],
+    "owner": "Open Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.open-development-flow-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "smart-data-sync-115",
+    "name": "Smart Data Sync 115",
+    "category": "Data",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Data API for developers. Provides reliable access to data data.",
+    "baseUrl": "https://api.smart-data-sync-115.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://smart-data-sync-115.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 98,
+    "verified": true,
+    "tags": [
+      "data",
+      "public"
+    ],
+    "owner": "Smart Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.smart-data-sync-115.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "secure-ai-stream-116",
+    "name": "Secure AI Stream 116",
+    "category": "AI",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance AI API for developers. Provides reliable access to ai data.",
+    "baseUrl": "https://api.secure-ai-stream-116.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://secure-ai-stream-116.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 90,
+    "verified": true,
+    "tags": [
+      "ai",
+      "public"
+    ],
+    "owner": "Secure Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.secure-ai-stream-116.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "cloud-finance-base-116",
+    "name": "Cloud Finance Base 116",
+    "category": "Finance",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Finance API for developers. Provides reliable access to finance data.",
+    "baseUrl": "https://api.cloud-finance-base-116.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://cloud-finance-base-116.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 91,
+    "verified": true,
+    "tags": [
+      "finance",
+      "public"
+    ],
+    "owner": "Cloud Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.cloud-finance-base-116.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "data-crypto-core-116",
+    "name": "Data Crypto Core 116",
+    "category": "Crypto",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Crypto API for developers. Provides reliable access to crypto data.",
+    "baseUrl": "https://api.data-crypto-core-116.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://data-crypto-core-116.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 92,
+    "verified": true,
+    "tags": [
+      "crypto",
+      "public"
+    ],
+    "owner": "Data Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.data-crypto-core-116.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "nextgen-sports-hub-116",
+    "name": "NextGen Sports Hub 116",
+    "category": "Sports",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Sports API for developers. Provides reliable access to sports data.",
+    "baseUrl": "https://api.nextgen-sports-hub-116.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://nextgen-sports-hub-116.com/docs",
+    "pricing": "free",
+    "reliabilityScore": 93,
+    "verified": true,
+    "tags": [
+      "sports",
+      "public"
+    ],
+    "owner": "NextGen Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.nextgen-sports-hub-116.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "global-weather-connect-116",
+    "name": "Global Weather Connect 116",
+    "category": "Weather",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Weather API for developers. Provides reliable access to weather data.",
+    "baseUrl": "https://api.global-weather-connect-116.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://global-weather-connect-116.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 94,
+    "verified": true,
+    "tags": [
+      "weather",
+      "public"
+    ],
+    "owner": "Global Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.global-weather-connect-116.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  },
+  {
+    "id": "fast-maps-link-116",
+    "name": "Fast Maps Link 116",
+    "category": "Maps",
+    "subcategories": [
+      "General"
+    ],
+    "description": "High performance Maps API for developers. Provides reliable access to maps data.",
+    "baseUrl": "https://api.fast-maps-link-116.com/v1",
+    "sampleEndpoint": "/status",
+    "httpMethod": "GET",
+    "auth": "apiKey",
+    "docsUrl": "https://fast-maps-link-116.com/docs",
+    "pricing": "freemium",
+    "reliabilityScore": 95,
+    "verified": true,
+    "tags": [
+      "maps",
+      "public"
+    ],
+    "owner": "Fast Corp",
+    "rateLimitNote": "1000/hour",
+    "license": "MIT",
+    "exampleRequest": "curl https://api.fast-maps-link-116.com/v1/status",
+    "addedAt": "2025-12-19T16:32:35.249Z",
+    "confidence": "medium"
+  }
+]

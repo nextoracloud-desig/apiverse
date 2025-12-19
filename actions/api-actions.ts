@@ -13,41 +13,41 @@ export async function ensureApiExists(apiId: string): Promise<boolean> {
         const apiExists = await prisma.api.findUnique({ where: { id: apiId } });
         if (apiExists) return true;
 
-        const { API_CATALOG } = await import("@/lib/api-catalog");
-        const apiRecord = API_CATALOG.find(a => a.id === apiId);
+        // Fallback: Check ApiProvider (the imported catalog)
+        const providerRecord = await prisma.apiProvider.findUnique({ where: { id: apiId } });
 
-        if (apiRecord) {
-            console.log(`Lazy planting API: ${apiRecord.name}`);
+        if (providerRecord) {
+            console.log(`Lazy planting API from Provider: ${providerRecord.name}`);
             await prisma.api.create({
                 data: {
-                    id: apiRecord.id,
-                    slug: apiRecord.slug,
-                    name: apiRecord.name,
-                    shortDescription: apiRecord.shortDescription,
-                    longDescription: apiRecord.longDescription,
-                    category: apiRecord.category,
-                    subCategory: apiRecord.subCategory || null,
-                    tags: apiRecord.tags.join(','),
-                    pricingType: apiRecord.pricingType,
-                    regionSupport: apiRecord.regionSupport?.join(',') || null,
-                    dxScore: apiRecord.dxScore ?? 0,
-                    popularityScore: apiRecord.popularityScore ?? 0,
-                    logoUrl: apiRecord.logoUrl,
-                    logoSymbol: apiRecord.logoSymbol || null,
-                    docsUrl: apiRecord.docsUrl,
-                    providerUrl: apiRecord.providerUrl,
-                    providerName: apiRecord.providerName,
-                    confidenceScore: apiRecord.confidenceScore,
-                    rating: apiRecord.rating,
-                    reviewCount: apiRecord.reviewCount,
-                    uptimeSla: apiRecord.uptimeSla,
-                    sampleEndpointUrl: apiRecord.sampleEndpointUrl,
-                    playgroundExampleResponse: apiRecord.playgroundExampleResponse ? JSON.stringify(apiRecord.playgroundExampleResponse) : null,
-                    featured: apiRecord.isFeatured || false,
-                    source: 'manual',
+                    id: providerRecord.id, // Use same ID
+                    slug: providerRecord.id, // Fallback slug
+                    name: providerRecord.name,
+                    shortDescription: providerRecord.description ? providerRecord.description.substring(0, 150) : "Imported API",
+                    longDescription: providerRecord.description || "",
+                    category: providerRecord.category || "General",
+                    subCategory: null,
+                    tags: "imported,api",
+                    pricingType: "Freemium", // Default
+                    regionSupport: "global",
+                    dxScore: 80,
+                    popularityScore: 50,
+                    logoUrl: null,
+                    logoSymbol: providerRecord.name.substring(0, 2).toUpperCase(),
+                    docsUrl: providerRecord.docsUrl || "",
+                    providerUrl: providerRecord.baseUrl,
+                    providerName: providerRecord.name,
+                    confidenceScore: 90,
+                    rating: 0,
+                    reviewCount: 0,
+                    uptimeSla: null,
+                    sampleEndpointUrl: null,
+                    playgroundExampleResponse: null,
+                    featured: false,
+                    source: 'auto-import',
                     status: 'active',
-                    affiliateUrl: apiRecord.affiliateUrl,
-                    referralNote: apiRecord.referralNote,
+                    affiliateUrl: null,
+                    referralNote: null,
                 }
             });
             return true;

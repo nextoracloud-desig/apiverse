@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client"
 import fs from "fs"
 import path from "path"
 import { normalizeApiData } from "@/scripts/helpers/normalize"
-import { SchemaAdapter } from "@/scripts/helpers/schema-adapter"
 
 const prisma = new PrismaClient()
 
@@ -42,7 +41,7 @@ export async function runImport(config: ImportConfig) {
     if (!process.env.DATABASE_URL) {
         throw new Error("DATABASE_URL is missing.");
     }
-
+    
     // 2. Production Guard
     const isProd = !process.env.DATABASE_URL.includes("localhost") && !process.env.DATABASE_URL.includes("127.0.0.1");
     if (isProd && !config.allowProd && !config.dryRun) {
@@ -52,15 +51,14 @@ export async function runImport(config: ImportConfig) {
     // 3. Load Data (Strict Path Resolution)
     const dataDir1 = path.resolve(process.cwd(), 'data');
     const dataDir2 = path.resolve(__dirname, '..', '..', 'data'); // fallback if running from deeply nested lib
-
+    
     let validDataDir = null;
     if (fs.existsSync(dataDir1)) validDataDir = dataDir1;
     else if (fs.existsSync(dataDir2)) validDataDir = dataDir2;
 
     if (!validDataDir) {
         console.error("CWD:", process.cwd());
-        console.error("Checked:", dataDir1, dataDir2);
-        try { console.error("Listing CWD:", fs.readdirSync(process.cwd()).join(', ')); } catch { }
+        try { console.error("Listing CWD:", fs.readdirSync(process.cwd()).join(', ')); } catch {}
         throw new Error("CRITICAL: 'data' directory not found.");
     }
 
@@ -68,7 +66,7 @@ export async function runImport(config: ImportConfig) {
 
     const files = ['apiverse_providers_1.json', 'apiverse_providers_2.json'];
     let allData: any[] = [];
-
+    
     for (const f of files) {
         const filePath = path.join(validDataDir, f);
         if (fs.existsSync(filePath)) {
@@ -82,8 +80,6 @@ export async function runImport(config: ImportConfig) {
                 stats.errors.push(`File error ${f}: ${e.message}`);
                 console.error(`Error reading ${f}:`, e);
             }
-        } else {
-            console.warn(`File missing: ${f} in ${validDataDir}`);
         }
     }
 
@@ -93,9 +89,9 @@ export async function runImport(config: ImportConfig) {
     }
 
     // 4. Batch Process
-    const adapter = new SchemaAdapter('ApiProvider');
+    // REMOVED ADAPTER - We map explicitly
     const batchSize = config.batchSize || 50;
-
+    
     const batches = [];
     for (let i = 0; i < allData.length; i += batchSize) {
         batches.push(allData.slice(i, i + batchSize));
@@ -105,9 +101,9 @@ export async function runImport(config: ImportConfig) {
 
     for (const batch of batches) {
         try {
-            await processBatch(batch, adapter, config, stats);
+            await processBatch(batch, config, stats);
         } catch (e: any) {
-            stats.errors.push(`Batch fatal error: ${e.message}`);
+             stats.errors.push(`Batch fatal error: ${e.message}`);
         }
     }
 
@@ -122,68 +118,63 @@ export async function runImport(config: ImportConfig) {
     return stats;
 }
 
-async function processBatch(batch: any[], adapter: SchemaAdapter, config: ImportConfig, stats: ImportStats) {
+async function processBatch(batch: any[], config: ImportConfig, stats: ImportStats) {
     if (config.dryRun) {
         stats.success += batch.length;
         console.log(`[DRY] Uploaded ${batch.length} items.`);
         return;
     }
 
-    // Helper to sanitize
-    const sanitize = (item: any) => {
+    // Helper to sanitize and MAP explicitly to Schema
+    const prepare = (item: any) => {
         const clean = normalizeApiData(item);
-        const filtered = adapter.filter(clean);
-        // Explicit drops
-        delete filtered.tenantId;
-        delete filtered.ownerId;
-        delete filtered.createdById;
-        delete filtered.sampleEndpoint;
-        delete filtered.subcategories;
-        return filtered;
+        if (!clean.id) throw new Error("Missing ID");
+        
+        // Explicitly construct only valid Prisma fields
+        return {
+            id: clean.id,
+            name: clean.name,
+            baseUrl: clean.baseUrl,
+            authType: clean.authType,
+            description: clean.description,
+            category: clean.category,
+            source: clean.source,
+            approved: clean.approved,
+            docsUrl: clean.docsUrl
+        };
     }
 
-    // We use sequential row-by-row for maximum safety and detailed error reporting
-    // defaulting to row-by-row logic immediately as 'fail-safe' is requested
-    // Transactional batching is faster but harder to debug individual failures in logs
-
-    // Using prisma transaction for speed, but falling back? 
-    // Let's compromise: Promise.allSettled parallel writes? No, connections.
-    // Sequential await in loop? Safest.
-
-    // Optimized: Transaction, if fail -> row-by-row
+    // Try Transaction
     try {
         await prisma.$transaction(
-            batch.map(item => {
-                const safe = sanitize(item);
-                if (!safe.id) throw new Error("Missing ID");
-                return prisma.apiProvider.upsert({
-                    where: { id: safe.id },
-                    update: safe,
-                    create: safe as any
-                })
-            })
+             batch.map(item => {
+                 const data = prepare(item);
+                 return prisma.apiProvider.upsert({
+                     where: { id: data.id },
+                     update: data,
+                     create: data
+                 })
+             })
         );
         stats.success += batch.length;
         process.stdout.write('.');
     } catch (e: any) {
-        console.warn(`Batch failed (${e.message.substring(0, 50)}...), retrying items individually.`);
-        // Fallback
-        for (const item of batch) {
-            try {
-                const safe = sanitize(item);
-                if (!safe.id) { stats.skipped++; continue; }
-
-                await prisma.apiProvider.upsert({
-                    where: { id: safe.id },
-                    update: safe,
-                    create: safe as any
-                });
-                stats.success++;
-            } catch (inner: any) {
-                stats.failed++;
-                // error logging
-                // console.error(`Row fail ${item.id}: ${inner.message}`); 
-            }
-        }
+         console.warn(`\nBatch failed (${e.message.substring(0,100)}...), retrying items individually.`);
+         
+         // Fallback
+         for (const item of batch) {
+             try {
+                 const data = prepare(item);
+                 await prisma.apiProvider.upsert({
+                     where: { id: data.id },
+                     update: data,
+                     create: data
+                 });
+                 stats.success++;
+             } catch (inner: any) {
+                 stats.failed++;
+                 console.error(`Row fail ${item.id || 'unknown'}: ${inner.message}`); 
+             }
+         }
     }
 }

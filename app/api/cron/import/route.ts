@@ -1,12 +1,20 @@
-import { importPublicApis } from "@/lib/importer"
-import { NextResponse } from "next/server"
+import { runImport } from "@/lib/import-engine";
+import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-    // Verify Vercel Cron header if needed (CRON_SECRET)
-    // Check auth header `authorization: Bearer ${process.env.CRON_SECRET}` if populated
-
-    const result = await importPublicApis()
-    return NextResponse.json(result)
+    try {
+        const stats = await runImport({
+            allowProd: true,
+            dryRun: false,
+            source: 'local'
+        });
+        return NextResponse.json({ ok: true, stats });
+    } catch (err: any) {
+        return NextResponse.json(
+            { ok: false, error: err.message || err.toString() },
+            { status: 500 }
+        );
+    }
 }

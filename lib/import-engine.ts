@@ -202,8 +202,9 @@ async function processBatch(batch: any[], config: ImportConfig, stats: ImportSta
 // Helper: Iterate all providers to ensure endpoints
 async function backfillAllEndpoints() {
     try {
-        const allIds = await prisma.apiProvider.findMany({ select: { id: true } });
-        console.log(`Backfilling endpoints for ${allIds.length} APIs...`);
+        // FIXED: Iterate over 'Api' table as per requirement
+        const allIds = await prisma.api.findMany({ select: { id: true } });
+        console.log(`Backfilling endpoints for ${allIds.length} APIs (from Api table)...`);
 
         let count = 0;
         for (const { id } of allIds) {
